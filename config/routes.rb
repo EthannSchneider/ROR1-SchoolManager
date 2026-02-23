@@ -13,13 +13,12 @@ Rails.application.routes.draw do
   # root "posts#index"
   devise_for :people, path: "auth", skip: [ :registrations ]
 
+  root "root#index"
+
   authenticate :person do
     resources :students
-
-    root "root#index"
   end
 
   unauthenticated do
-    root to: redirect("/auth/sign_in")
   end
 end

@@ -1,12 +1,26 @@
 <header class="bg-gray-900 shadow-md">
-  <nav class="navbar">
-    <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
-        <%= link_to "SchoolManager", root_path, class: "text-2xl font-bold text-blue-400" %>
-      </div>
-      <ul class="flex space-x-6">
+  <nav class="container mx-auto px-4">
+    <div class="flex justify-between items-center py-4">
+      <%= link_to "SchoolManager", root_path, class: "text-2xl font-bold text-blue-400" %>
+      <ul class="flex space-x-6 items-center">
         <li><%= link_to "Home", root_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
         <li><%= link_to "Students", students_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li>
+          <% if person_signed_in? %>
+          <div class="relative group">
+            <button class="flex items-center space-x-2 text-gray-300 hover:text-blue-400 transition px-3 py-2 rounded-md hover:bg-gray-700">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div class="absolute right-0 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg hidden group-hover:block">
+              <%= button_to "Logout", destroy_person_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-red-400 transition rounded-md" %>
+            </div>
+          </div>
+          <% else %>
+          <%= link_to "Login", new_person_session_path, class: "text-gray-300 hover:text-blue-400 transition px-3 py-2 rounded-md hover:bg-gray-700" %>
+          <% end %>
+        </li>
       </ul>
     </div>
   </nav>
