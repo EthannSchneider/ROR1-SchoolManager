@@ -1,0 +1,75 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Students</h1>
+    <%= link_to "New student", new_student_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  </div>
+
+  <div class="overflow-x-auto shadow-md rounded-lg">
+    <table class="w-full border-collapse">
+      <thead class="bg-gray-100 border-b">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">First name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">AVS number</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Admission date</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">End date</th>
+          <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @students.each do |student| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.firstname %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.lastname %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.email %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.avs_number %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.admission_date %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= student.end_date %></td>
+          <td class="px-6 py-4 text-center text-sm space-x-2">
+            <%= link_to "Show", student, class: "text-blue-600 hover:text-blue-800" %>
+            <%= link_to "Edit", edit_student_path(student), class: "text-yellow-600 hover:text-yellow-800" %>
+            <%= link_to "Destroy", student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="bg-gray-100 border-t">
+          <td colspan="8" class="px-6 py-4">
+            <div class="flex justify-between items-center">
+              <%= form_with url: students_path, method: :get, local: true, class: "flex items-center gap-2" do |f| %>
+              <label class="text-sm font-medium text-gray-700">Per page:</label>
+              <%= f.select :per_page, [10, 25, 50, 100], { selected: params[:per_page] || 10 }, { class: "px-3 py-1 text-sm border border-gray-300 rounded hover:border-gray-400", onchange: "this.form.submit()" } %>
+              <% end %>
+
+              <div class="flex gap-2 items-center">
+                <% if @students.respond_to?(:current_page) && @students.current_page > 1 %>
+                <%= link_to "← Previous", students_path(page: @students.current_page - 1, per_page: params[:per_page]), class: "px-3 py-1 text-sm bg-gray-300 text-gray-700 rounded hover:bg-gray-400" %>
+                <% end %>
+
+                <span class="px-3 py-1 text-sm text-gray-700 font-medium">
+                  <%= form_with url: students_path, method: :get, local: true, class: "flex items-center gap-2" do |f| %>
+                  <label class="text-sm font-medium text-gray-700">Page</label>
+                  <%= f.number_field :page, min: 1, max: (@students.respond_to?(:total_pages) ? @students.total_pages : 1), value: (@students.respond_to?(:current_page) ? @students.current_page : 1), class: "px-3 py-1 text-sm border border-gray-300 rounded", onchange: "this.form.submit()" %>
+                  <%= f.hidden_field :per_page, value: params[:per_page] %>
+                  <label class="text-sm font-medium text-gray-700">of <%= @students.respond_to?(:total_pages) ? @students.total_pages : 1 %></label>
+                  <% end %>
+
+                </span>
+
+                <% if @students.respond_to?(:next_page) && @students.next_page %>
+                <%= link_to "Next →", students_path(page: @students.next_page, per_page: params[:per_page]), class: "px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700" %>
+                <% end %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-50 text-green-700 border border-green-200 rounded"><%= notice %></p>
+  <% end %>
+
+  <h1 class="text-3xl font-bold mb-6">Student</h1>
+
+  <div class="space-y-4 mb-8">
+    <p>
+      <strong class="text-gray-700">First name:</strong>
+      <span class="text-gray-600"><%= @student.firstname %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Last name:</strong>
+      <span class="text-gray-600"><%= @student.lastname %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Email:</strong>
+      <span class="text-gray-600"><%= @student.email %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">AVS number:</strong>
+      <span class="text-gray-600"><%= @student.avs_number %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Admission date:</strong>
+      <span class="text-gray-600"><%= @student.admission_date %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">End date:</strong>
+      <span class="text-gray-600"><%= @student.end_date %></span>
+    </p>
+  </div>
+
+  <div class="flex gap-4 mb-4">
+    <%= link_to "Edit this student", edit_student_path(@student), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Back to students", students_path, class: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700" %>
+  </div>
+
+  <div>
+    <%= link_to "Destroy this student", @student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+  </div>
+</div>
