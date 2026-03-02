@@ -1,38 +1,8 @@
-<div class="p-6">
-  <% if notice %>
-  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
-  <% end %>
-
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">Deans</h1>
-  </div>
-
-  <div class="overflow-x-auto shadow-md rounded-lg">
-    <table class="w-full border-collapse">
-      <thead class="bg-gray-100 border-b">
-        <tr>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">First name</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last name</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @deans.each do |dean| %>
-        <tr class="border-b hover:bg-gray-50">
-          <td class="px-6 py-4 text-sm text-gray-900"><%= dean.firstname %></td>
-          <td class="px-6 py-4 text-sm text-gray-900"><%= dean.lastname %></td>
-          <td class="px-6 py-4 text-sm text-gray-900"><%= dean.email %></td>
-          <td class="px-6 py-4 text-sm space-x-2">
-            <%= link_to "Show", dean_path(dean), class: "text-blue-600 hover:text-blue-800" %>
-            <% if current_person.is_a?(Dean) %>
-            <%= link_to "Edit", edit_dean_path(dean), class: "text-yellow-600 hover:text-yellow-800" %>
-            <%= link_to "Destroy", dean_path(dean), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
-            <% end %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<%= render "shared/person_index",
+  records: @deans,
+  title: "Deans",
+  new_path: nil,
+  new_label: nil,
+  extra_headers: [],
+  footer_partial: nil,
+  footer_locals: {} %>

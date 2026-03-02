@@ -1,30 +1,20 @@
-<div class="p-6">
-  <% if notice %>
-  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
-  <% end %>
+<%= render "shared/person_show",
+  person: @collaborator,
+  title: "Collaborator",
+  back_path: collaborators_path,
+  back_label: "Back to collaborators" do |collaborator| %>
+  <p>
+    <strong class="text-gray-700">Type:</strong>
+    <span class="text-gray-600"><%= collaborator.type %></span>
+  </p>
 
-  <h1 class="text-3xl font-bold mb-6">Collaborator</h1>
+  <p>
+    <strong class="text-gray-700">Contract start:</strong>
+    <span class="text-gray-600"><%= collaborator.contract_start %></span>
+  </p>
 
-  <div class="space-y-3 mb-6">
-    <p><strong>First name:</strong> <%= @collaborator.firstname %></p>
-    <p><strong>Last name:</strong> <%= @collaborator.lastname %></p>
-    <p><strong>Email:</strong> <%= @collaborator.email %></p>
-    <p><strong>AVS number:</strong> <%= @collaborator.avs_number %></p>
-    <p><strong>Phone number:</strong> <%= @collaborator.phone_number %></p>
-    <p><strong>Street:</strong> <%= [ @collaborator.street, @collaborator.street_number ].compact.join(" ") %></p>
-    <p><strong>Postal code:</strong> <%= @collaborator.postal_code %></p>
-    <p><strong>City:</strong> <%= @collaborator.city %></p>
-    <p><strong>Birthdate:</strong> <%= @collaborator.birthdate %></p>
-    <p><strong>Age:</strong> <%= @collaborator.age %></p>
-    <p><strong>Contract start:</strong> <%= @collaborator.contract_start %></p>
-    <p><strong>Contract end:</strong> <%= @collaborator.contract_end %></p>
-  </div>
-
-  <div class="flex gap-3">
-    <%= link_to "Back", collaborators_path, class: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700" %>
-    <% if current_person.is_a?(Dean) %>
-    <%= link_to "Edit", edit_collaborator_path(@collaborator), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
-    <%= link_to "Destroy", collaborator_path(@collaborator), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
-    <% end %>
-  </div>
-</div>
+  <p>
+    <strong class="text-gray-700">Contract end:</strong>
+    <span class="text-gray-600"><%= collaborator.contract_end %></span>
+  </p>
+<% end %>

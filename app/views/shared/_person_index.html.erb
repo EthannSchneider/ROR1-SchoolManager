@@ -1,0 +1,61 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+  <p class="mb-4 p-4 bg-red-100 text-red-700 rounded"><%= alert %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold"><%= title %></h1>
+    <% if new_path.present? && current_person.is_a?(Dean) %>
+    <%= link_to new_label, new_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <% end %>
+  </div>
+
+  <div class="overflow-x-auto shadow-md rounded-lg">
+    <table class="w-full border-collapse">
+      <thead class="bg-gray-100 border-b">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">First name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">AVS number</th>
+          <% extra_headers.each do |header| %>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700"><%= header %></th>
+          <% end %>
+          <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% records.each do |record| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm text-gray-900"><%= record.firstname %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= record.lastname %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= record.email %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= record.avs_number %></td>
+          <% if block_given? %>
+          <%= yield(record) %>
+          <% end %>
+          <td class="px-6 py-4 text-center text-sm space-x-2">
+            <%= link_to "Show", record, class: "text-blue-600 hover:text-blue-800" %>
+            <% if current_person.is_a?(Dean) %>
+            <%= link_to "Edit", edit_polymorphic_path(record), class: "text-yellow-600 hover:text-yellow-800" %>
+            <%= link_to "Destroy", record, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      <% if footer_partial.present? %>
+      <tfoot>
+        <tr class="bg-gray-100 border-t">
+          <td colspan="<%= 5 + extra_headers.size %>" class="px-6 py-4">
+            <%= render footer_partial, **footer_locals %>
+          </td>
+        </tr>
+      </tfoot>
+      <% end %>
+    </table>
+  </div>
+</div>
