@@ -10,20 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_09_095042) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_103837) do
   create_table "people", force: :cascade do |t|
+    t.date "admission_date"
+    t.string "avs_number"
+    t.date "birthdate"
+    t.string "city"
+    t.date "contract_end"
+    t.date "contract_start"
     t.datetime "created_at", null: false
     t.datetime "current_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.date "end_date"
+    t.string "firstname"
     t.datetime "last_sign_in_at"
     t.string "last_sign_in_ip"
+    t.string "lastname"
+    t.string "phone_number"
+    t.string "postal_code"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "role"
     t.integer "sign_in_count", default: 0, null: false
+    t.string "street"
+    t.string "street_number"
+    t.string "type"
     t.datetime "updated_at", null: false
+    t.index ["avs_number"], name: "index_people_on_avs_number", unique: true
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true
   end

@@ -25,7 +25,7 @@ rails db:migrate # it will run the database migrations
 #### Local deployment
 
 ```shell
-rails server # it will start the rails server on http://localhost:3000
+bin/dev # it will start the local development server
 ```
 
 #### Running tests

@@ -5,32 +5,34 @@
 # below each fixture, per the syntax in the comments below
 #
 
-admin:
-  id: 1
-  email: admin@example.com
+one:
+  id: 2
+  email: student-one@example.com
   firstname: John
   lastname: Doe
-  avs_number: "756.1234.5678.93"
+  avs_number: "756.1234.5678.90"
   phone_number: "+41 1 234 56 78"
   street: Main Street
   street_number: "42"
   postal_code: "1200"
   city: Geneva
   birthdate: 1990-01-15
-  type: Person
+  admission_date: <%= Date.today %>
+  end_date: <%= Date.tomorrow %>
+  type: Student
 
-collaborator:
-  id: 4
-  email: collaborator@example.com
-  firstname: Alice
-  lastname: Martin
-  avs_number: "756.1111.2222.33"
-  phone_number: "+41 3 456 78 90"
-  street: Team Street
-  street_number: "7"
-  postal_code: "1000"
+two:
+  id: 3
+  email: student-two@example.com
+  firstname: Jane
+  lastname: Smith
+  avs_number: "756.9876.5432.10"
+  phone_number: "+41 2 345 67 89"
+  street: Secondary Street
+  street_number: "100"
+  postal_code: "1201"
   city: Lausanne
-  birthdate: 1988-05-10
-  contract_start: <%= Date.today %>
-  contract_end: <%= Date.today + 365 %>
-  type: Collaborator
+  birthdate: 1992-06-20
+  admission_date: <%= Date.today %>
+  end_date: <%= Date.tomorrow %>
+  type: Student

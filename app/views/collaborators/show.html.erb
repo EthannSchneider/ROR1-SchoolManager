@@ -1,0 +1,20 @@
+<%= render "shared/person_show",
+  person: @collaborator,
+  title: "Collaborator",
+  back_path: collaborators_path,
+  back_label: "Back to collaborators" do |collaborator| %>
+  <p>
+    <strong class="text-gray-700">Type:</strong>
+    <span class="text-gray-600"><%= collaborator.type %></span>
+  </p>
+
+  <p>
+    <strong class="text-gray-700">Contract start:</strong>
+    <span class="text-gray-600"><%= collaborator.contract_start %></span>
+  </p>
+
+  <p>
+    <strong class="text-gray-700">Contract end:</strong>
+    <span class="text-gray-600"><%= collaborator.contract_end %></span>
+  </p>
+<% end %>

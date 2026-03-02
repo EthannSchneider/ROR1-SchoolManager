@@ -1,0 +1,8 @@
+<%= render "shared/person_form",
+  model: collaborator,
+  scope: :collaborator,
+  start_date_field: :contract_start,
+  end_date_field: :contract_end,
+  show_type_select: true,
+  type_options: [["Collaborator", "Collaborator"], ["Teacher", "Teacher"], ["Dean", "Dean"]],
+  type_selected: collaborator.type.presence || collaborator.class.name %>

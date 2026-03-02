@@ -1,0 +1,15 @@
+<%= render "shared/person_show",
+  person: @student,
+  title: "Student",
+  back_path: students_path,
+  back_label: "Back to students" do |student| %>
+  <p>
+    <strong class="text-gray-700">Admission date:</strong>
+    <span class="text-gray-600"><%= student.admission_date %></span>
+  </p>
+
+  <p>
+    <strong class="text-gray-700">End date:</strong>
+    <span class="text-gray-600"><%= student.end_date %></span>
+  </p>
+<% end %>
