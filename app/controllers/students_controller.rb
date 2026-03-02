@@ -74,6 +74,12 @@ class StudentsController < ApplicationController
         :lastname,
         :email,
         :avs_number,
+        :phone_number,
+        :street,
+        :street_number,
+        :postal_code,
+        :city,
+        :birthdate,
         :admission_date,
         :end_date,
         :password

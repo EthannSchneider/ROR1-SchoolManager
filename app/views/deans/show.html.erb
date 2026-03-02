@@ -6,6 +6,12 @@
     <p><strong>Last name:</strong> <%= @dean.lastname %></p>
     <p><strong>Email:</strong> <%= @dean.email %></p>
     <p><strong>AVS number:</strong> <%= @dean.avs_number %></p>
+    <p><strong>Phone number:</strong> <%= @dean.phone_number %></p>
+    <p><strong>Street:</strong> <%= [ @dean.street, @dean.street_number ].compact.join(" ") %></p>
+    <p><strong>Postal code:</strong> <%= @dean.postal_code %></p>
+    <p><strong>City:</strong> <%= @dean.city %></p>
+    <p><strong>Birthdate:</strong> <%= @dean.birthdate %></p>
+    <p><strong>Age:</strong> <%= @dean.age %></p>
   </div>
 
   <div class="flex gap-3">

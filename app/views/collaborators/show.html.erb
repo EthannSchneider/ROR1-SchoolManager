@@ -10,6 +10,12 @@
     <p><strong>Last name:</strong> <%= @collaborator.lastname %></p>
     <p><strong>Email:</strong> <%= @collaborator.email %></p>
     <p><strong>AVS number:</strong> <%= @collaborator.avs_number %></p>
+    <p><strong>Phone number:</strong> <%= @collaborator.phone_number %></p>
+    <p><strong>Street:</strong> <%= [ @collaborator.street, @collaborator.street_number ].compact.join(" ") %></p>
+    <p><strong>Postal code:</strong> <%= @collaborator.postal_code %></p>
+    <p><strong>City:</strong> <%= @collaborator.city %></p>
+    <p><strong>Birthdate:</strong> <%= @collaborator.birthdate %></p>
+    <p><strong>Age:</strong> <%= @collaborator.age %></p>
     <p><strong>Contract start:</strong> <%= @collaborator.contract_start %></p>
     <p><strong>Contract end:</strong> <%= @collaborator.contract_end %></p>
   </div>

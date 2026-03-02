@@ -6,6 +6,12 @@
     <p><strong>Last name:</strong> <%= @teacher.lastname %></p>
     <p><strong>Email:</strong> <%= @teacher.email %></p>
     <p><strong>AVS number:</strong> <%= @teacher.avs_number %></p>
+    <p><strong>Phone number:</strong> <%= @teacher.phone_number %></p>
+    <p><strong>Street:</strong> <%= [ @teacher.street, @teacher.street_number ].compact.join(" ") %></p>
+    <p><strong>Postal code:</strong> <%= @teacher.postal_code %></p>
+    <p><strong>City:</strong> <%= @teacher.city %></p>
+    <p><strong>Birthdate:</strong> <%= @teacher.birthdate %></p>
+    <p><strong>Age:</strong> <%= @teacher.age %></p>
   </div>
 
   <div class="flex gap-3">

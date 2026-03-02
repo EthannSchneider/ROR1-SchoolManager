@@ -54,4 +54,24 @@ class PersonTest < ActiveSupport::TestCase
     )
     assert_not person.valid?
   end
+
+  test "age returns correct value before and on birthday" do
+    person = people(:admin)
+
+    assert_equal 33, person.age(Date.new(2024, 1, 14))
+    assert_equal 34, person.age(Date.new(2024, 1, 15))
+  end
+
+  test "age returns nil when birthdate is missing" do
+    person = Person.new(
+      email: "no-birthdate@example.com",
+      firstname: "No",
+      lastname: "Birthdate",
+      avs_number: "756.0000.0000.01",
+      password: "password123",
+      birthdate: nil
+    )
+
+    assert_nil person.age(Date.new(2024, 1, 15))
+  end
 end

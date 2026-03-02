@@ -27,6 +27,36 @@
     </p>
 
     <p>
+      <strong class="text-gray-700">Phone number:</strong>
+      <span class="text-gray-600"><%= @student.phone_number %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Street:</strong>
+      <span class="text-gray-600"><%= [ @student.street, @student.street_number ].compact.join(" ") %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Postal code:</strong>
+      <span class="text-gray-600"><%= @student.postal_code %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">City:</strong>
+      <span class="text-gray-600"><%= @student.city %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Birthdate:</strong>
+      <span class="text-gray-600"><%= @student.birthdate %></span>
+    </p>
+
+    <p>
+      <strong class="text-gray-700">Age:</strong>
+      <span class="text-gray-600"><%= @student.age %></span>
+    </p>
+
+    <p>
       <strong class="text-gray-700">Admission date:</strong>
       <span class="text-gray-600"><%= @student.admission_date %></span>
     </p>
