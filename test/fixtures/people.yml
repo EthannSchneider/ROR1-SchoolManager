@@ -18,3 +18,19 @@ admin:
   city: Geneva
   birthdate: 1990-01-15
   type: Person
+
+collaborator:
+  id: 4
+  email: collaborator@example.com
+  firstname: Alice
+  lastname: Martin
+  avs_number: "756.1111.2222.33"
+  phone_number: "+41 3 456 78 90"
+  street: Team Street
+  street_number: "7"
+  postal_code: "1000"
+  city: Lausanne
+  birthdate: 1988-05-10
+  contract_start: <%= Date.today %>
+  contract_end: <%= Date.today + 365 %>
+  type: Collaborator
