@@ -38,13 +38,13 @@
   </div>
 
   <div class="flex gap-4 mb-4">
-    <% if current_person.is_a?(Collaborator) %>
+    <% if current_person.is_a?(Dean) %>
     <%= link_to "Edit this student", edit_student_path(@student), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
     <% end %>
     <%= link_to "Back to students", students_path, class: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700" %>
   </div>
 
-  <% if current_person.is_a?(Collaborator) %>
+  <% if current_person.is_a?(Dean) %>
   <div>
     <%= link_to "Destroy this student", @student, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
   </div>

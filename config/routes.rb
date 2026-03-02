@@ -16,11 +16,17 @@ Rails.application.routes.draw do
   root "root#index"
 
   authenticate :person do
-    constraints PersonTypeConstraint.collaborator do
+    constraints PersonTypeConstraint.dean do
       resources :students, except: %i[index show]
+      resources :collaborators, except: %i[index show]
+      resources :teachers, controller: :collaborators, only: %i[new edit create update destroy]
+      resources :deans, controller: :collaborators, only: %i[new edit create update destroy]
     end
 
     resources :students, only: %i[index show]
+    resources :teachers, only: %i[index show]
+    resources :deans, only: %i[index show]
+    resources :collaborators, only: %i[index show]
   end
 
   unauthenticated do

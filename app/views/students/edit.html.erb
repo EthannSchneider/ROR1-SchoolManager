@@ -1,8 +1,7 @@
-<h1>Edit student</h1>
-
-<%= render "form", student: @student %>
-
-<div>
-  <%= link_to "Show this student", @student %> |
-  <%= link_to "Back to students", students_path %>
+<div class="p-6 max-w-2xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">Edit student</h1>
+  <%= render "form", student: @student %>
+  <div class="mt-4">
+    <%= link_to "Back", student_path(@student), class: "text-blue-600 hover:text-blue-800" %>
+  </div>
 </div>

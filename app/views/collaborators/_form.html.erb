@@ -1,0 +1,58 @@
+<%= form_with(model: collaborator, scope: :collaborator) do |form| %>
+<% if collaborator.errors.any? %>
+<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+  <h2 class="text-lg font-semibold text-red-800 mb-2"><%= pluralize(collaborator.errors.count, "error") %> prohibited this collaborator from being saved:</h2>
+  <ul class="list-disc list-inside space-y-1">
+    <% collaborator.errors.full_messages.each do |message| %>
+    <li class="text-red-700"><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="space-y-4">
+  <div>
+    <%= form.label :firstname, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.text_field :firstname, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :lastname, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.text_field :lastname, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.email_field :email, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :avs_number, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.text_field :avs_number, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :contract_start, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.date_field :contract_start, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :contract_end, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.date_field :contract_end, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :type, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.select :type, options_for_select([["Collaborator", "Collaborator"], ["Teacher", "Teacher"], ["Dean", "Dean"]], collaborator.type.presence || collaborator.class.name), {}, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.label :password, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.password_field :password, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md" %>
+  </div>
+</div>
+<% end %>

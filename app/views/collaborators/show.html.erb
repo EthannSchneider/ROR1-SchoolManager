@@ -1,0 +1,24 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <% end %>
+
+  <h1 class="text-3xl font-bold mb-6">Collaborator</h1>
+
+  <div class="space-y-3 mb-6">
+    <p><strong>First name:</strong> <%= @collaborator.firstname %></p>
+    <p><strong>Last name:</strong> <%= @collaborator.lastname %></p>
+    <p><strong>Email:</strong> <%= @collaborator.email %></p>
+    <p><strong>AVS number:</strong> <%= @collaborator.avs_number %></p>
+    <p><strong>Contract start:</strong> <%= @collaborator.contract_start %></p>
+    <p><strong>Contract end:</strong> <%= @collaborator.contract_end %></p>
+  </div>
+
+  <div class="flex gap-3">
+    <%= link_to "Back", collaborators_path, class: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700" %>
+    <% if current_person.is_a?(Dean) %>
+    <%= link_to "Edit", edit_collaborator_path(@collaborator), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Destroy", collaborator_path(@collaborator), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+    <% end %>
+  </div>
+</div>

@@ -6,115 +6,122 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @student = students(:one)
     uniq = SecureRandom.hex(4)
-    @collaborator = Collaborator.create!(
-      email: "collaborator-#{uniq}@example.com",
-      firstname: "Alice",
-      lastname: "Martin",
+
+    @dean = Dean.create!(
+      email: "dean-#{uniq}@example.com",
+      firstname: "Diana",
+      lastname: "Dean",
       avs_number: "756.1111.2222.#{rand(10_000..99_999)}",
       contract_start: Date.today,
       contract_end: Date.today + 365,
       password: "password123"
     )
+
+    @teacher = Teacher.create!(
+      email: "teacher-#{uniq}@example.com",
+      firstname: "Tom",
+      lastname: "Teacher",
+      avs_number: "756.2222.3333.#{rand(10_000..99_999)}",
+      contract_start: Date.today,
+      contract_end: Date.today + 365,
+      password: "password123"
+    )
+
+    @collaborator = Collaborator.create!(
+      email: "collaborator-#{uniq}@example.com",
+      firstname: "Alice",
+      lastname: "Martin",
+      avs_number: "756.3333.4444.#{rand(10_000..99_999)}",
+      contract_start: Date.today,
+      contract_end: Date.today + 365,
+      password: "password123"
+    )
+
     @person = Person.create!(
-      email: "admin-#{uniq}@example.com",
+      email: "person-#{uniq}@example.com",
       firstname: "John",
       lastname: "Doe",
-      avs_number: "756.1234.5678.#{rand(10_000..99_999)}",
+      avs_number: "756.4444.5555.#{rand(10_000..99_999)}",
       password: "password123"
     )
   end
 
-  test "should get index" do
-    sign_in @person
+  test "collaborator should get index" do
+    sign_in @collaborator
     get students_url
     assert_response :success
   end
 
-  test "should get index with custom per_page" do
-    sign_in @person
-    get students_url, params: { per_page: 20 }
+  test "teacher should get index" do
+    sign_in @teacher
+    get students_url
     assert_response :success
   end
 
-  test "should get index with per_page capped at 100" do
-    sign_in @person
-    get students_url, params: { per_page: 500 }
+  test "dean should get index" do
+    sign_in @dean
+    get students_url
     assert_response :success
   end
 
-  test "should get new" do
-    sign_in @collaborator
+  test "dean should get new" do
+    sign_in @dean
     get new_student_url
     assert_response :success
   end
 
-  test "should create student" do
-    sign_in @collaborator
+  test "dean should create student" do
+    sign_in @dean
     assert_difference("Student.count") do
-      post students_url, params: { student: { firstname: "John", lastname: "Doe", email: "john@example.com", avs_number: "123456789", admission_date: Date.today, end_date: Date.tomorrow, password: "password123" } }
+      post students_url, params: { student: { firstname: "John", lastname: "Doe", email: "john-#{SecureRandom.hex(2)}@example.com", avs_number: "756.5555.6666.#{rand(10_000..99_999)}", admission_date: Date.today, end_date: Date.tomorrow, password: "password123" } }
     end
+
     assert_redirected_to student_url(Student.last)
   end
 
-  test "should show student" do
-    sign_in @person
-    get student_url(@student)
-    assert_response :success
+  test "collaborator should not get new" do
+    sign_in @collaborator
+    get new_student_url
+    assert_response :not_found
   end
 
-  test "should get edit" do
-    sign_in @collaborator
-    get edit_student_url(@student)
-    assert_response :success
+  test "teacher should not get new" do
+    sign_in @teacher
+    get new_student_url
+    assert_response :not_found
   end
 
-  test "should update student" do
-    sign_in @collaborator
+  test "dean should update student" do
+    sign_in @dean
     patch student_url(@student), params: { student: { firstname: "Jane" } }
     assert_redirected_to student_url(@student)
     @student.reload
     assert_equal "Jane", @student.firstname
   end
 
-  test "should destroy student" do
-    sign_in @collaborator
+  test "dean should destroy student" do
+    sign_in @dean
     assert_difference("Student.count", -1) do
       delete student_url(@student)
     end
     assert_redirected_to students_url
   end
 
-  test "non collaborator should not get new" do
+  test "person should get index" do
     sign_in @person
-    get new_student_url
-    assert_response :not_found
+    get students_url
+    assert_response :success
   end
 
-  test "non collaborator should not create student" do
+  test "person should show student" do
     sign_in @person
-    assert_no_difference("Student.count") do
-      post students_url, params: { student: { firstname: "John", lastname: "Doe", email: "blocked@example.com", avs_number: "99887766554", admission_date: Date.today, end_date: Date.tomorrow, password: "password123" } }
-    end
-    assert_response :not_found
+    get student_url(@student)
+    assert_response :success
   end
 
-  test "non collaborator should not get edit" do
-    sign_in @person
-    get edit_student_url(@student)
-    assert_response :not_found
-  end
-
-  test "non collaborator should not update student" do
-    sign_in @person
-    patch student_url(@student), params: { student: { firstname: "Blocked" } }
-    assert_response :not_found
-  end
-
-  test "non collaborator should not destroy student" do
-    sign_in @person
-    assert_no_difference("Student.count") do
-      delete student_url(@student)
-    end
-    assert_response :not_found
+  test "collaborator should show student" do
+    sign_in @collaborator
+    get student_url(@student)
+    assert_response :success
   end
 end

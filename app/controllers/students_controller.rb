@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :require_dean!, only: %i[new create edit update destroy]
 
   # GET /students or /students.json
   def index
@@ -68,6 +69,17 @@ class StudentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.require(:student).permit(:firstname, :lastname, :email, :avs_number, :admission_date, :end_date, :password)
+      permitted = params.require(:student).permit(
+        :firstname,
+        :lastname,
+        :email,
+        :avs_number,
+        :admission_date,
+        :end_date,
+        :password
+      )
+
+      permitted.delete(:password) if permitted[:password].blank?
+      permitted
     end
 end

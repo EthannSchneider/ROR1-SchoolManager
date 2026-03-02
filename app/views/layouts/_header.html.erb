@@ -5,6 +5,9 @@
       <ul class="flex space-x-6 items-center">
         <li><%= link_to "Home", root_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
         <li><%= link_to "Students", students_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li><%= link_to "Collaborators", collaborators_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li><%= link_to "Teachers", teachers_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li><%= link_to "Deans", deans_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
         <li>
           <% if person_signed_in? %>
           <div class="relative group">

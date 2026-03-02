@@ -3,6 +3,10 @@ class PersonTypeConstraint
     new("Collaborator")
   end
 
+  def self.dean
+    new("Dean")
+  end
+
   def initialize(type)
     @type = type
   end

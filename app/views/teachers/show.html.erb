@@ -1,0 +1,18 @@
+<div class="p-6">
+  <h1 class="text-3xl font-bold mb-6">Teacher</h1>
+
+  <div class="space-y-3 mb-6">
+    <p><strong>First name:</strong> <%= @teacher.firstname %></p>
+    <p><strong>Last name:</strong> <%= @teacher.lastname %></p>
+    <p><strong>Email:</strong> <%= @teacher.email %></p>
+    <p><strong>AVS number:</strong> <%= @teacher.avs_number %></p>
+  </div>
+
+  <div class="flex gap-3">
+    <%= link_to "Back", teachers_path, class: "px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700" %>
+    <% if current_person.is_a?(Dean) %>
+    <%= link_to "Edit", edit_teacher_path(@teacher), class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "Destroy", teacher_path(@teacher), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+    <% end %>
+  </div>
+</div>
