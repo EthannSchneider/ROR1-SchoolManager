@@ -2,12 +2,23 @@
   <nav class="container mx-auto px-4">
     <div class="flex justify-between items-center py-4">
       <%= link_to "SchoolManager", root_path, class: "text-2xl font-bold text-blue-400" %>
-      <ul class="flex space-x-6 items-center">
+
+      <ul class="hidden md:flex space-x-6 items-center">
         <li><%= link_to "Home", root_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
-        <li><%= link_to "Students", students_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
-        <li><%= link_to "Collaborators", collaborators_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
-        <li><%= link_to "Teachers", teachers_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
-        <li><%= link_to "Deans", deans_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li class="relative group">
+          <button class="flex items-center space-x-1 text-gray-300 hover:text-blue-400 transition">
+            <span>People</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.134l3.71-3.904a.75.75 0 111.08 1.04l-4.25 4.47a.75.75 0 01-1.08 0l-4.25-4.47a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <div class="absolute left-0 w-44 bg-gray-800 border border-gray-700 rounded-md shadow-lg hidden group-hover:block z-10">
+            <%= link_to "Students", students_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <%= link_to "Collaborator", collaborators_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <%= link_to "Teachers", teachers_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <%= link_to "Deans", deans_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+          </div>
+        </li>
         <li>
           <% if person_signed_in? %>
           <div class="relative group">
@@ -25,6 +36,43 @@
           <% end %>
         </li>
       </ul>
+
+      <details class="md:hidden relative group">
+        <summary class="list-none cursor-pointer text-gray-300 hover:text-blue-400 transition px-3 py-2 rounded-md hover:bg-gray-700">
+          <span class="sr-only">Toggle menu</span>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </summary>
+        <div class="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-20">
+          <div class="py-1">
+            <%= link_to "Home", root_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+
+            <details class="group/people">
+              <summary class="list-none cursor-pointer px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition flex items-center justify-between">
+                <span>People</span>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.134l3.71-3.904a.75.75 0 111.08 1.04l-4.25 4.47a.75.75 0 01-1.08 0l-4.25-4.47a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path>
+                </svg>
+              </summary>
+              <div class="pl-4 pb-1">
+                <%= link_to "Students", students_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+                <%= link_to "Collaborator", collaborators_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+                <%= link_to "Teachers", teachers_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+                <%= link_to "Deans", deans_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+              </div>
+            </details>
+
+            <% if person_signed_in? %>
+            <div class="px-4 py-2">
+              <%= button_to "Logout", destroy_person_session_path, method: :delete, class: "w-full text-left text-gray-300 hover:text-red-400 transition" %>
+            </div>
+            <% else %>
+            <%= link_to "Login", new_person_session_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <% end %>
+          </div>
+        </div>
+      </details>
     </div>
   </nav>
 </header>
