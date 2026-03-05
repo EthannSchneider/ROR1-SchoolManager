@@ -60,6 +60,7 @@ class CollaboratorsController < ApplicationController
       :contract_start,
       :contract_end,
       :password,
+      :profile_picture,
       :type
     )
 

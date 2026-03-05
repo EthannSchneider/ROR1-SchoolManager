@@ -82,7 +82,8 @@ class StudentsController < ApplicationController
         :birthdate,
         :admission_date,
         :end_date,
-        :password
+        :password,
+        :profile_picture
       )
 
       permitted.delete(:password) if permitted[:password].blank?
