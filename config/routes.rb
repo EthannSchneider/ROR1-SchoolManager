@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   root "root#index"
 
   authenticate :person do
+    resource :profile_picture, only: %i[update], controller: "people/profile_pictures"
+
     constraints PersonTypeConstraint.dean do
       resources :students, except: %i[index show]
       resources :collaborators, except: %i[index show]
