@@ -21,6 +21,7 @@
       <span class="text-gray-600"><%= person.email %></span>
     </p>
 
+    <% if can_view_sensitive_person_data? %>
     <p>
       <strong class="text-gray-700">AVS number:</strong>
       <span class="text-gray-600"><%= person.avs_number %></span>
@@ -45,6 +46,7 @@
       <strong class="text-gray-700">City:</strong>
       <span class="text-gray-600"><%= person.city %></span>
     </p>
+    <% end %>
 
     <p>
       <strong class="text-gray-700">Birthdate:</strong>

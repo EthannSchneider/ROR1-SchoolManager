@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
   before_action :store_index_view_mode
-  helper_method :index_view_mode
+  helper_method :index_view_mode, :can_view_sensitive_person_data?
 
   private
 
@@ -19,8 +19,12 @@ class ApplicationController < ActionController::Base
     session[:index_view_mode].in?(%w[table cards]) ? session[:index_view_mode] : "table"
   end
 
+  def can_view_sensitive_person_data?
+    current_person.is_a?(Collaborator)
+  end
+
   def require_collaborator!
-    return if current_person.is_a?(Collaborator)
+    return if can_view_sensitive_person_data?
 
     head :not_found
   end

@@ -43,10 +43,6 @@
           <dt class="text-gray-500">Email</dt>
           <dd class="text-gray-900 text-right break-all"><%= record.email %></dd>
         </div>
-        <div class="flex justify-between gap-2">
-          <dt class="text-gray-500">AVS number</dt>
-          <dd class="text-gray-900 text-right"><%= record.avs_number %></dd>
-        </div>
         <% extra_fields.each do |field| %>
         <div class="flex justify-between gap-2">
           <dt class="text-gray-500"><%= field[:label] %></dt>
@@ -78,7 +74,6 @@
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">First name</th>
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last name</th>
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">AVS number</th>
           <% extra_fields.each do |field| %>
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700"><%= field[:label] %></th>
           <% end %>
@@ -91,7 +86,6 @@
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.firstname %></td>
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.lastname %></td>
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.email %></td>
-          <td class="px-6 py-4 text-sm text-gray-900"><%= record.avs_number %></td>
           <% extra_fields.each do |field| %>
           <td class="px-6 py-4 text-sm text-gray-900"><%= field[:value].call(record) %></td>
           <% end %>
@@ -108,7 +102,7 @@
       <% if footer_partial.present? %>
       <tfoot>
         <tr class="bg-gray-100 border-t">
-          <td colspan="<%= 5 + extra_fields.size %>" class="px-6 py-4">
+          <td colspan="<%= 4 + extra_fields.size %>" class="px-6 py-4">
             <%= render footer_partial, **footer_locals %>
           </td>
         </tr>
