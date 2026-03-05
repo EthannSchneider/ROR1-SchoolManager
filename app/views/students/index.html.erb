@@ -3,9 +3,9 @@
   title: "Students",
   new_path: new_student_path,
   new_label: "New student",
-  extra_headers: ["Admission date", "End date"],
+  extra_fields: [
+    { label: "Admission date", value: ->(student) { student.admission_date } },
+    { label: "End date", value: ->(student) { student.end_date } }
+  ],
   footer_partial: "shared/students_index_footer",
-  footer_locals: { students: @students, per_page: (params[:per_page] || 10) } do |student| %>
-  <td class="px-6 py-4 text-sm text-gray-900"><%= student.admission_date %></td>
-  <td class="px-6 py-4 text-sm text-gray-900"><%= student.end_date %></td>
-<% end %>
+  footer_locals: { students: @students, per_page: (params[:per_page] || 10) } %>

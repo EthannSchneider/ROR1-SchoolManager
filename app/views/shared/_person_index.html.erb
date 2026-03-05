@@ -1,4 +1,10 @@
 <div class="p-6">
+  <% extra_fields ||= [] %>
+  <% footer_locals ||= {} %>
+  <% cards_view = index_view_mode == "cards" %>
+  <% table_url = url_for(request.query_parameters.merge(view: "table")) %>
+  <% cards_url = url_for(request.query_parameters.merge(view: "cards")) %>
+
   <% if notice %>
   <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
   <% end %>
@@ -6,13 +12,65 @@
   <p class="mb-4 p-4 bg-red-100 text-red-700 rounded"><%= alert %></p>
   <% end %>
 
-  <div class="flex justify-between items-center mb-6">
+  <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
     <h1 class="text-3xl font-bold"><%= title %></h1>
-    <% if new_path.present? && current_person.is_a?(Dean) %>
-    <%= link_to new_label, new_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
-    <% end %>
+    <div class="flex items-center gap-2">
+      <div class="inline-flex rounded-md shadow-sm border border-gray-300 overflow-hidden">
+        <%= link_to table_url, class: "px-3 py-2 #{cards_view ? 'bg-white text-gray-700 hover:bg-gray-50' : 'bg-gray-900 text-white'}", title: "Table view", aria: { label: "Table view" } do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5h18M3 12h18M3 16.5h18M6 4.5v15M12 4.5v15M18 4.5v15"></path>
+        </svg>
+        <% end %>
+        <%= link_to cards_url, class: "px-3 py-2 #{cards_view ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}", title: "Cards view", aria: { label: "Cards view" } do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6.75h7v4.5H4zM13 6.75h7v4.5h-7zM4 12.75h7v4.5H4zM13 12.75h7v4.5h-7z"></path>
+        </svg>
+        <% end %>
+      </div>
+      <% if new_path.present? && current_person.is_a?(Dean) %>
+      <%= link_to new_label, new_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+      <% end %>
+    </div>
   </div>
 
+  <% if cards_view %>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <% records.each do |record| %>
+    <article class="bg-white border border-gray-200 rounded-lg shadow-sm p-5">
+      <h2 class="text-lg font-semibold text-gray-900"><%= "#{record.firstname} #{record.lastname}" %></h2>
+      <dl class="mt-3 space-y-2 text-sm">
+        <div class="flex justify-between gap-2">
+          <dt class="text-gray-500">Email</dt>
+          <dd class="text-gray-900 text-right break-all"><%= record.email %></dd>
+        </div>
+        <div class="flex justify-between gap-2">
+          <dt class="text-gray-500">AVS number</dt>
+          <dd class="text-gray-900 text-right"><%= record.avs_number %></dd>
+        </div>
+        <% extra_fields.each do |field| %>
+        <div class="flex justify-between gap-2">
+          <dt class="text-gray-500"><%= field[:label] %></dt>
+          <dd class="text-gray-900 text-right"><%= field[:value].call(record) %></dd>
+        </div>
+        <% end %>
+      </dl>
+
+      <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-3 text-sm">
+        <%= link_to "Show", record, class: "text-blue-600 hover:text-blue-800" %>
+        <% if current_person.is_a?(Dean) %>
+        <%= link_to "Edit", edit_polymorphic_path(record), class: "text-yellow-600 hover:text-yellow-800" %>
+        <%= link_to "Destroy", record, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+        <% end %>
+      </div>
+    </article>
+    <% end %>
+  </div>
+  <% if footer_partial.present? %>
+  <div class="mt-4">
+    <%= render footer_partial, **footer_locals %>
+  </div>
+  <% end %>
+  <% else %>
   <div class="overflow-x-auto shadow-md rounded-lg">
     <table class="w-full border-collapse">
       <thead class="bg-gray-100 border-b">
@@ -21,8 +79,8 @@
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last name</th>
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
           <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">AVS number</th>
-          <% extra_headers.each do |header| %>
-          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700"><%= header %></th>
+          <% extra_fields.each do |field| %>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700"><%= field[:label] %></th>
           <% end %>
           <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
         </tr>
@@ -34,8 +92,8 @@
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.lastname %></td>
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.email %></td>
           <td class="px-6 py-4 text-sm text-gray-900"><%= record.avs_number %></td>
-          <% if block_given? %>
-          <%= yield(record) %>
+          <% extra_fields.each do |field| %>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= field[:value].call(record) %></td>
           <% end %>
           <td class="px-6 py-4 text-center text-sm space-x-2">
             <%= link_to "Show", record, class: "text-blue-600 hover:text-blue-800" %>
@@ -50,7 +108,7 @@
       <% if footer_partial.present? %>
       <tfoot>
         <tr class="bg-gray-100 border-t">
-          <td colspan="<%= 5 + extra_headers.size %>" class="px-6 py-4">
+          <td colspan="<%= 5 + extra_fields.size %>" class="px-6 py-4">
             <%= render footer_partial, **footer_locals %>
           </td>
         </tr>
@@ -58,4 +116,5 @@
       <% end %>
     </table>
   </div>
+  <% end %>
 </div>

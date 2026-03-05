@@ -3,8 +3,8 @@
   title: "Collaborators",
   new_path: new_collaborator_path,
   new_label: "New collaborator",
-  extra_headers: ["Type"],
+  extra_fields: [
+    { label: "Type", value: ->(collaborator) { collaborator.type } }
+  ],
   footer_partial: nil,
-  footer_locals: {} do |collaborator| %>
-  <td class="px-6 py-4 text-sm text-gray-900"><%= collaborator.type %></td>
-<% end %>
+  footer_locals: {} %>
