@@ -117,21 +117,21 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     sign_in @person
     get student_url(@student)
     assert_response :success
-    assert_no_match "AVS number:", response.body
-    assert_no_match "Phone number:", response.body
-    assert_no_match "Street:", response.body
-    assert_no_match "Postal code:", response.body
-    assert_no_match "City:", response.body
+    assert_no_match "AVS number", response.body
+    assert_no_match "Phone number", response.body
+    assert_no_match "Street", response.body
+    assert_no_match "Postal code", response.body
+    assert_no_match "City", response.body
   end
 
   test "collaborator should show student" do
     sign_in @collaborator
     get student_url(@student)
     assert_response :success
-    assert_match "AVS number:", response.body
-    assert_match "Phone number:", response.body
-    assert_match "Street:", response.body
-    assert_match "Postal code:", response.body
-    assert_match "City:", response.body
+    assert_match "AVS number", response.body
+    assert_match "Phone number", response.body
+    assert_match "Street", response.body
+    assert_match "Postal code", response.body
+    assert_match "City", response.body
   end
 end
