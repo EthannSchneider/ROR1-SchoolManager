@@ -2,4 +2,8 @@
   person: @teacher,
   title: "Teacher",
   back_path: teachers_path,
-  back_label: "Back to teachers" %>
+  back_label: "Back to teachers" do |teacher| %>
+<%= person_detail_card("Responsible for classes", teacher.responsable_school_classes.map(&:name).join(", ")) %>
+<%= person_detail_card("Contract start", teacher.contract_start) %>
+<%= person_detail_card("Contract end", teacher.contract_end) %>
+<% end %>

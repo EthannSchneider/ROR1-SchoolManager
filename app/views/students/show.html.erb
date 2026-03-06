@@ -3,13 +3,7 @@
   title: "Student",
   back_path: students_path,
   back_label: "Back to students" do |student| %>
-  <p>
-    <strong class="text-gray-700">Admission date:</strong>
-    <span class="text-gray-600"><%= student.admission_date %></span>
-  </p>
-
-  <p>
-    <strong class="text-gray-700">End date:</strong>
-    <span class="text-gray-600"><%= student.end_date %></span>
-  </p>
+<%= person_detail_card("Class", student.school_class&.name) %>
+<%= person_detail_card("Admission date", student.admission_date) %>
+<%= person_detail_card("End date", student.end_date) %>
 <% end %>

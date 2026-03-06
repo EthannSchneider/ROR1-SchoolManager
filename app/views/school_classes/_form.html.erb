@@ -1,0 +1,108 @@
+<%= form_with(model: school_class) do |form| %>
+  <% students = @students_page || Student.order(:lastname, :firstname).page(params[:students_page]).per(25) %>
+  <% students_per_page = @students_per_page || 25 %>
+  <% selected_student_ids = school_class.student_ids %>
+  <% selected_student_ids_on_other_pages = selected_student_ids - students.map(&:id) %>
+  <% picker_id = "students-picker-#{school_class.persisted? ? school_class.id : "new"}" %>
+  <% if school_class.errors.any? %>
+    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <h2 class="text-lg font-semibold text-red-800 mb-2">
+        <%= pluralize(school_class.errors.count, "error") %> prohibited this class from being saved:
+      </h2>
+      <ul class="list-disc list-inside space-y-1">
+        <% school_class.errors.full_messages.each do |message| %>
+          <li class="text-red-700"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-4">
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+    </div>
+
+    <div>
+      <%= form.label :responsable_id, "Responsable", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.collection_select :responsable_id, Collaborator.order(:lastname, :firstname), :id, :email, { prompt: "Select a responsable" }, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
+    </div>
+
+    <div>
+      <%= form.label :student_ids, "Students", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= hidden_field_tag "school_class[student_ids][]", "" %>
+      <% selected_student_ids_on_other_pages.each do |student_id| %>
+        <%= hidden_field_tag "school_class[student_ids][]", student_id %>
+      <% end %>
+
+      <div id="<%= picker_id %>" class="rounded-md border border-gray-300 p-3 bg-white">
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          <input
+            type="search"
+            placeholder="Search students..."
+            class="flex-1 min-w-48 px-3 py-2 border border-gray-300 rounded-md text-sm"
+            oninput="filterSchoolClassStudents('<%= picker_id %>', this.value)"
+          >
+          <button type="button" class="px-3 py-2 text-xs font-medium rounded-md bg-gray-100 hover:bg-gray-200" onclick="toggleSchoolClassStudents('<%= picker_id %>', true)">Select all</button>
+          <button type="button" class="px-3 py-2 text-xs font-medium rounded-md bg-gray-100 hover:bg-gray-200" onclick="toggleSchoolClassStudents('<%= picker_id %>', false)">Clear</button>
+        </div>
+
+        <div class="max-h-72 overflow-y-auto space-y-2">
+          <% students.each do |student| %>
+            <% full_name = "#{student.firstname} #{student.lastname}" %>
+            <label class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50 student-item" data-student-name="<%= full_name.downcase %>">
+              <%= check_box_tag "school_class[student_ids][]", student.id, selected_student_ids.include?(student.id), class: "rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
+              <span class="text-sm text-gray-800"><%= full_name %></span>
+            </label>
+          <% end %>
+        </div>
+
+        <% if students.respond_to?(:total_pages) && students.total_pages > 1 %>
+          <div class="mt-4 flex items-center justify-between border-t border-gray-200 pt-3">
+            <div class="text-xs text-gray-600">
+              Page <%= students.current_page %> of <%= students.total_pages %>
+            </div>
+            <div class="flex items-center gap-2">
+              <% if students.prev_page %>
+                <% previous_page_path = school_class.persisted? ? edit_school_class_path(school_class, students_page: students.prev_page, students_per_page: students_per_page, anchor: picker_id) : new_school_class_path(students_page: students.prev_page, students_per_page: students_per_page, anchor: picker_id) %>
+                <%= link_to "← Previous", previous_page_path, class: "px-3 py-1 text-xs bg-gray-100 rounded-md hover:bg-gray-200" %>
+              <% end %>
+              <% if students.next_page %>
+                <% next_page_path = school_class.persisted? ? edit_school_class_path(school_class, students_page: students.next_page, students_per_page: students_per_page, anchor: picker_id) : new_school_class_path(students_page: students.next_page, students_per_page: students_per_page, anchor: picker_id) %>
+                <%= link_to "Next →", next_page_path, class: "px-3 py-1 text-xs bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.submit class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md" %>
+    </div>
+  </div>
+
+  <script>
+    function filterSchoolClassStudents(containerId, query) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const normalized = query.toLowerCase().trim();
+      const items = container.querySelectorAll(".student-item");
+
+      items.forEach((item) => {
+        const name = item.dataset.studentName || "";
+        item.classList.toggle("hidden", normalized.length > 0 && !name.includes(normalized));
+      });
+    }
+
+    function toggleSchoolClassStudents(containerId, checked) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      container.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+        checkbox.checked = checked;
+      });
+    }
+  </script>
+<% end %>

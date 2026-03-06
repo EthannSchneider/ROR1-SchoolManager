@@ -4,6 +4,7 @@
   new_path: new_student_path,
   new_label: "New student",
   extra_fields: [
+    { label: "Class", value: ->(student) { student.school_class&.name || "-" } },
     { label: "Admission date", value: ->(student) { student.admission_date } },
     { label: "End date", value: ->(student) { student.end_date } }
   ],

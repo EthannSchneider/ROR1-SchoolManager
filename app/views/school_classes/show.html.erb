@@ -1,0 +1,52 @@
+<div class="mx-auto max-w-4xl p-6">
+  <% if notice %>
+    <p class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-800"><%= notice %></p>
+  <% end %>
+
+  <div class="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900"><%= @school_class.name %></h1>
+      <p class="text-sm text-gray-500 mt-1">Class details</p>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="rounded-xl bg-slate-50 px-4 py-3">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Responsable</p>
+        <p class="mt-1 text-sm font-medium text-slate-900"><%= [@school_class.responsable.firstname, @school_class.responsable.lastname].join(" ") %></p>
+      </div>
+      <div class="rounded-xl bg-slate-50 px-4 py-3">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Students count</p>
+        <p class="mt-1 text-sm font-medium text-slate-900"><%= @school_class.students.size %></p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold text-gray-900 mb-3">Students</h2>
+      <% if @school_class.students.any? %>
+        <ul class="space-y-2">
+          <% @school_class.students.order(:lastname, :firstname).each do |student| %>
+            <li class="rounded-lg border border-gray-200 px-4 py-3 flex items-center justify-between">
+              <span><%= [student.firstname, student.lastname].join(" ") %></span>
+              <%= link_to "Show", student_path(student), class: "text-blue-600 hover:text-blue-800 text-sm" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-sm text-gray-600">No students assigned yet.</p>
+      <% end %>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-4">
+      <div class="flex gap-3">
+        <% if current_person.is_a?(Dean) %>
+          <%= link_to "Edit", edit_school_class_path(@school_class), class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700" %>
+        <% end %>
+        <%= link_to "Back to classes", school_classes_path, class: "rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800" %>
+      </div>
+
+      <% if current_person.is_a?(Dean) %>
+        <%= link_to "Destroy", @school_class, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700" %>
+      <% end %>
+    </div>
+  </div>
+</div>

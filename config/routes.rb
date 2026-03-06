@@ -21,14 +21,16 @@ Rails.application.routes.draw do
     constraints PersonTypeConstraint.dean do
       resources :students, except: %i[index show]
       resources :collaborators, except: %i[index show]
-      resources :teachers, controller: :collaborators, only: %i[new edit create update destroy]
-      resources :deans, controller: :collaborators, only: %i[new edit create update destroy]
+      resources :school_classes, path: "classes", except: %i[index show]
+      resources :teachers, controller: :collaborators, except: %i[index show]
+      resources :deans, controller: :collaborators, except: %i[index show]
     end
 
     resources :students, only: %i[index show]
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]
+    resources :school_classes, path: "classes", only: %i[index show]
   end
 
   unauthenticated do
