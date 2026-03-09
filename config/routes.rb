@@ -32,17 +32,20 @@ Rails.application.routes.draw do
       end
     end
 
+    constraints PersonTypeConstraint.collaborator do
+      resources :formation_plans, only: %i[index show] do
+        resources :formation_modules, only: %i[index show]
+      end
+      resources :formation_modules, only: %i[index show] do
+        resources :unities, only: %i[index show]
+      end
+    end
+
     resources :students, only: %i[index show]
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]
     resources :school_classes, path: "classes", only: %i[index show]
-    resources :formation_plans, only: %i[index show] do
-      resources :formation_modules, only: %i[index show]
-    end
-    resources :formation_modules, only: %i[index show] do
-      resources :unities, only: %i[index show]
-    end
   end
 
   unauthenticated do
