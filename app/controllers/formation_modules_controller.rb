@@ -1,12 +1,9 @@
 class FormationModulesController < ApplicationController
   before_action :set_formation_module, only: %i[show edit update destroy]
-  before_action :set_formation_plan, only: %i[index new create show]
+  before_action :set_formation_plan
   before_action :require_dean!, only: %i[new create edit update destroy]
 
   def index
-    per_page = pagination_per_page_value
-    @formation_modules = FormationModule.includes(:formation_plans, :unities).page(params[:page]).per(per_page)
-    @pagination_per_page = per_page
   end
 
   def show
@@ -32,7 +29,7 @@ class FormationModulesController < ApplicationController
 
   def update
     if @formation_module.update(formation_module_params)
-      redirect_to formation_module_url(@formation_module), notice: "Module was successfully updated."
+      redirect_to formation_plan_formation_module_url(@formation_plan, @formation_module), notice: "Module was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -40,7 +37,7 @@ class FormationModulesController < ApplicationController
 
   def destroy
     @formation_module.destroy
-    redirect_to formation_modules_url, notice: "Module was successfully destroyed."
+    redirect_to formation_plan_url(@formation_plan), notice: "Module was successfully destroyed."
   end
 
   private

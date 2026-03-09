@@ -25,19 +25,17 @@ Rails.application.routes.draw do
       resources :teachers, controller: :collaborators, except: %i[index show]
       resources :deans, controller: :collaborators, except: %i[index show]
       resources :formation_plans, except: %i[index show] do
-        resources :formation_modules, except: %i[index show]
-      end
-      resources :formation_modules, except: %i[index show] do
-        resources :unities, except: %i[index show]
+        resources :formation_modules, only: %i[new create show edit update destroy] do
+          resources :unities, only: %i[new create show edit update destroy]
+        end
       end
     end
 
     constraints PersonTypeConstraint.collaborator do
       resources :formation_plans, only: %i[index show] do
-        resources :formation_modules, only: %i[index show]
-      end
-      resources :formation_modules, only: %i[index show] do
-        resources :unities, only: %i[index show]
+        resources :formation_modules, only: %i[index show] do
+          resources :unities, only: %i[index show]
+        end
       end
     end
 

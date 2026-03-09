@@ -1,32 +1,25 @@
-<%= form_with(model: unity, url: @formation_module ? formation_module_unities_path(@formation_module) : unities_path) do |form| %>
-  <% if unity.errors.any? %>
-    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-      <h2 class="text-lg font-semibold text-red-800 mb-2">
-        <%= pluralize(unity.errors.count, "error") %> prohibited this unity from being saved:
-      </h2>
-      <ul class="list-disc list-inside space-y-1">
-        <% unity.errors.full_messages.each do |message| %>
-          <li class="text-red-700"><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="space-y-4">
-    <div>
-      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
-    </div>
-
-    <% unless @formation_module %>
-    <div>
-      <%= form.label :formation_module_id, "Module", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= form.collection_select :formation_module_id, @formation_modules, :id, :name, { prompt: "Select a module" }, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
-    </div>
+<%= form_with(model: unity, url: formation_plan_formation_module_unities_path(@formation_plan, @formation_module)) do |form| %>
+<% if unity.errors.any? %>
+<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+  <h2 class="text-lg font-semibold text-red-800 mb-2">
+    <%= pluralize(unity.errors.count, "error") %> prohibited this unity from being saved:
+  </h2>
+  <ul class="list-disc list-inside space-y-1">
+    <% unity.errors.full_messages.each do |message| %>
+    <li class="text-red-700"><%= message %></li>
     <% end %>
+  </ul>
+</div>
+<% end %>
 
-    <div>
-      <%= form.submit class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md" %>
-    </div>
+<div class="space-y-4">
+  <div>
+    <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-md" %>
   </div>
+
+  <div>
+    <%= form.submit class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md" %>
+  </div>
+</div>
 <% end %>

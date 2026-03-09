@@ -1,10 +1,6 @@
 <div class="p-6">
   <div class="mb-6">
-    <% if @formation_module %>
-    <%= link_to "← Back to unities", formation_module_unities_path(@formation_module), class: "text-blue-600 hover:text-blue-800" %>
-    <% else %>
-    <%= link_to "← Back to unities", unities_path, class: "text-blue-600 hover:text-blue-800" %>
-    <% end %>
+    <%= link_to "← Back to module", formation_plan_formation_module_path(@formation_plan, @formation_module), class: "text-blue-600 hover:text-blue-800" %>
   </div>
 
   <h1 class="text-3xl font-bold mb-6">New Unity</h1>
