@@ -19,6 +19,7 @@ one:
   birthdate: 1990-01-15
   admission_date: <%= Date.today %>
   end_date: <%= Date.tomorrow %>
+  school_class_id: 1
   type: Student
 
 two:
@@ -35,4 +36,5 @@ two:
   birthdate: 1992-06-20
   admission_date: <%= Date.today %>
   end_date: <%= Date.tomorrow %>
+  school_class_id:
   type: Student

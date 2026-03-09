@@ -43,48 +43,18 @@
 
     <div class="space-y-8 px-6 py-8 sm:px-10">
       <div class="grid gap-3 sm:grid-cols-2">
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">First name</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.firstname %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Last name</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.lastname %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Email</p>
-          <p class="mt-1 text-sm font-medium text-slate-900 break-all"><%= person.email %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Birthdate</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.birthdate %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Age</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.age %></p>
-        </div>
+        <%= person_detail_card("First name", person.firstname) %>
+        <%= person_detail_card("Last name", person.lastname) %>
+        <%= person_detail_card("Email", person.email, value_classes: "break-all") %>
+        <%= person_detail_card("Birthdate", person.birthdate) %>
+        <%= person_detail_card("Age", person.age) %>
 
         <% if can_view_sensitive_person_data? %>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">AVS number</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.avs_number %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Phone number</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.phone_number %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Street</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= [ person.street, person.street_number ].compact.join(" ") %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Postal code</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.postal_code %></p>
-        </div>
-        <div class="rounded-xl bg-slate-50 px-4 py-3">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">City</p>
-          <p class="mt-1 text-sm font-medium text-slate-900"><%= person.city %></p>
-        </div>
+          <%= person_detail_card("AVS number", person.avs_number) %>
+          <%= person_detail_card("Phone number", person.phone_number) %>
+          <%= person_detail_card("Street") { [person.street, person.street_number].compact.join(" ") } %>
+          <%= person_detail_card("Postal code", person.postal_code) %>
+          <%= person_detail_card("City", person.city) %>
         <% end %>
       </div>
 

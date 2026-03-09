@@ -19,6 +19,7 @@
             <%= link_to "Deans", deans_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
           </div>
         </li>
+        <li><%= link_to "Classes", school_classes_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
         <li>
           <% if person_signed_in? %>
           <% profile_path = current_person.instance_of?(Person) ? nil : polymorphic_path(current_person) %>
@@ -66,6 +67,7 @@
                 <%= link_to "Deans", deans_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
               </div>
             </details>
+            <%= link_to "Classes", school_classes_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
 
             <% if person_signed_in? %>
             <div class="px-4 py-2">

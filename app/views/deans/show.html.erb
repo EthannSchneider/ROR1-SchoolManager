@@ -2,4 +2,10 @@
   person: @dean,
   title: "Dean",
   back_path: deans_path,
-  back_label: "Back to deans" %>
+  back_label: "Back to deans" do |dean| %>
+<%= person_detail_card("Responsible for classes", dean.responsable_school_classes.map(&:name).join(", ")) %>
+
+<%= person_detail_card("Contract start", dean.contract_start) %>
+
+<%= person_detail_card("Contract end", dean.contract_end) %>
+<% end %>

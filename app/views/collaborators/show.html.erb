@@ -3,18 +3,9 @@
   title: "Collaborator",
   back_path: collaborators_path,
   back_label: "Back to collaborators" do |collaborator| %>
-  <p>
-    <strong class="text-gray-700">Type:</strong>
-    <span class="text-gray-600"><%= collaborator.type %></span>
-  </p>
+<%= person_detail_card("Type", collaborator.type) %>
 
-  <p>
-    <strong class="text-gray-700">Contract start:</strong>
-    <span class="text-gray-600"><%= collaborator.contract_start %></span>
-  </p>
+<%= person_detail_card("Contract start", collaborator.contract_start) %>
 
-  <p>
-    <strong class="text-gray-700">Contract end:</strong>
-    <span class="text-gray-600"><%= collaborator.contract_end %></span>
-  </p>
+<%= person_detail_card("Contract end", collaborator.contract_end) %>
 <% end %>

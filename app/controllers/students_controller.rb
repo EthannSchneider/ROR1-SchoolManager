@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
     per_page = params[:per_page].to_i
     per_page = 10 if per_page <= 0
     per_page = 100 if per_page > 100
-    @students = Student.page(params[:page]).per(per_page)
+    @students = Student.includes(:school_class).page(params[:page]).per(per_page)
   end
 
   # GET /students/1 or /students/1.json
@@ -82,6 +82,7 @@ class StudentsController < ApplicationController
         :birthdate,
         :admission_date,
         :end_date,
+        :school_class_id,
         :password,
         :profile_picture
       )
