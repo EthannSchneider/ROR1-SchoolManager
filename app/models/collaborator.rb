@@ -3,7 +3,7 @@ class Collaborator < Person
     class_name: "SchoolClass",
     foreign_key: :responsable_id,
     inverse_of: :responsable,
-    dependent: :restrict_with_error
+    dependent: :nullify
 
   validates :contract_start, presence: true
   validates :contract_end, presence: false
