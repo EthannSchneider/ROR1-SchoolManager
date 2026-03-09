@@ -1,12 +1,12 @@
 <div class="p-6">
   <% if notice %>
-    <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
   <% end %>
 
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold">Classes</h1>
     <% if current_person.is_a?(Dean) %>
-      <%= link_to "New class", new_school_class_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <%= link_to "New class", new_school_class_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
     <% end %>
   </div>
 
@@ -22,18 +22,18 @@
       </thead>
       <tbody>
         <% @school_classes.each do |school_class| %>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-6 py-4 text-sm text-gray-900"><%= school_class.name %></td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= [school_class.responsable.firstname, school_class.responsable.lastname].join(" ") %></td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= school_class.students.size %></td>
-            <td class="px-6 py-4 text-center text-sm space-x-2">
-              <%= link_to "Show", school_class, class: "text-blue-600 hover:text-blue-800" %>
-              <% if current_person.is_a?(Dean) %>
-                <%= link_to "Edit", edit_school_class_path(school_class), class: "text-yellow-600 hover:text-yellow-800" %>
-                <%= link_to "Destroy", school_class, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
-              <% end %>
-            </td>
-          </tr>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm text-gray-900"><%= school_class.name %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= school_class.responsable ? [school_class.responsable.firstname, school_class.responsable.lastname].join(" ") : "N/A" %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= school_class.students.size %></td>
+          <td class="px-6 py-4 text-center text-sm space-x-2">
+            <%= link_to "Show", school_class, class: "text-blue-600 hover:text-blue-800" %>
+            <% if current_person.is_a?(Dean) %>
+            <%= link_to "Edit", edit_school_class_path(school_class), class: "text-yellow-600 hover:text-yellow-800" %>
+            <%= link_to "Destroy", school_class, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+            <% end %>
+          </td>
+        </tr>
         <% end %>
       </tbody>
     </table>
