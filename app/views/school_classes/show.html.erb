@@ -12,7 +12,7 @@
     <div class="grid gap-3 sm:grid-cols-2">
       <div class="rounded-xl bg-slate-50 px-4 py-3">
         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Responsable</p>
-        <p class="mt-1 text-sm font-medium text-slate-900"><%= [@school_class.responsable.firstname, @school_class.responsable.lastname].join(" ") %></p>
+        <p class="mt-1 text-sm font-medium text-slate-900"><%= @school_class.responsable ? [@school_class.responsable.firstname, @school_class.responsable.lastname].join(" ") : "Not assigned" %></p>
       </div>
       <div class="rounded-xl bg-slate-50 px-4 py-3">
         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Students count</p>
