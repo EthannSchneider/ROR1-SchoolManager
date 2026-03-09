@@ -4,7 +4,9 @@ class SchoolClassesController < ApplicationController
   before_action :set_students_for_picker, only: %i[new edit]
 
   def index
-    @school_classes = SchoolClass.includes(:responsable, :students).order(:name)
+    per_page = pagination_per_page_value
+    @school_classes = SchoolClass.includes(:responsable, :students).page(params[:page]).per(per_page)
+    @pagination_per_page = per_page
   end
 
   def show

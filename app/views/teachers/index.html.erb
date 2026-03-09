@@ -4,5 +4,5 @@
   new_path: nil,
   new_label: nil,
   extra_fields: [],
-  footer_partial: nil,
-  footer_locals: {} %>
+  footer_partial: "shared/pagination_footer",
+  footer_locals: { records: @teachers, per_page: @pagination_per_page } %>

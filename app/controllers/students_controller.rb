@@ -4,10 +4,9 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    per_page = params[:per_page].to_i
-    per_page = 10 if per_page <= 0
-    per_page = 100 if per_page > 100
+    per_page = pagination_per_page_value
     @students = Student.includes(:school_class).page(params[:page]).per(per_page)
+    @pagination_per_page = per_page
   end
 
   # GET /students/1 or /students/1.json

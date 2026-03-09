@@ -3,7 +3,9 @@ class CollaboratorsController < ApplicationController
   before_action :require_dean!, only: %i[new create edit update destroy]
 
   def index
-    @collaborators = Collaborator.order(:lastname, :firstname)
+    per_page = pagination_per_page_value
+    @collaborators = Collaborator.all.page(params[:page]).per(per_page)
+    @pagination_per_page = per_page
   end
 
   def show

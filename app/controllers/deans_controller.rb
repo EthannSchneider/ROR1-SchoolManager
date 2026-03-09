@@ -2,7 +2,9 @@ class DeansController < ApplicationController
   before_action :set_dean, only: :show
 
   def index
-    @deans = Dean.order(:lastname, :firstname)
+    per_page = pagination_per_page_value
+    @deans = Dean.all.page(params[:page]).per(per_page)
+    @pagination_per_page = per_page
   end
 
   def show

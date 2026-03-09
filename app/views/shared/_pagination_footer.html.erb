@@ -1,0 +1,37 @@
+<% per_page_param ||= :per_page %>
+<% page_param ||= :page %>
+<% preserved_query = request.query_parameters.except(per_page_param.to_s, page_param.to_s) %>
+<% base_params = request.path_parameters.merge(preserved_query).merge(only_path: true) %>
+<% current_page = records.respond_to?(:current_page) ? records.current_page : 1 %>
+<% total_pages = records.respond_to?(:total_pages) ? records.total_pages : 1 %>
+<% prev_page = records.respond_to?(:prev_page) ? records.prev_page : nil %>
+<% next_page = records.respond_to?(:next_page) ? records.next_page : nil %>
+<% per_page ||= pagination_per_page_value %>
+
+<div class="flex flex-wrap justify-between items-center gap-4">
+  <%= form_with url: url_for(base_params), method: :get, local: true, class: "flex items-center gap-2" do |f| %>
+    <label class="text-sm font-medium text-gray-700">Per page:</label>
+    <%= f.select per_page_param, pagination_per_page_options, { selected: per_page }, { class: "px-3 py-1 text-sm border border-gray-300 rounded hover:border-gray-400", onchange: "this.form.submit()" } %>
+    <%= pagination_hidden_fields(preserved_query) %>
+  <% end %>
+
+  <div class="flex gap-2 items-center">
+    <% if prev_page %>
+      <%= link_to "← Previous", url_for(base_params.merge(page_param => prev_page, per_page_param => per_page)), class: "px-3 py-1 text-sm bg-gray-300 text-gray-700 rounded hover:bg-gray-400" %>
+    <% end %>
+
+    <span class="px-3 py-1 text-sm text-gray-700 font-medium">
+      <%= form_with url: url_for(base_params), method: :get, local: true, class: "flex items-center gap-2" do |f| %>
+        <span class="text-sm font-medium text-gray-700">Page</span>
+        <%= f.number_field page_param, min: 1, max: total_pages, value: current_page, class: "px-3 py-1 text-sm border border-gray-300 rounded", onchange: "this.form.submit()" %>
+        <%= f.hidden_field per_page_param, value: per_page %>
+        <span class="text-sm font-medium text-gray-700">of <%= total_pages %></span>
+        <%= pagination_hidden_fields(preserved_query) %>
+      <% end %>
+    </span>
+
+    <% if next_page %>
+      <%= link_to "Next →", url_for(base_params.merge(page_param => next_page, per_page_param => per_page)), class: "px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <% end %>
+  </div>
+</div>

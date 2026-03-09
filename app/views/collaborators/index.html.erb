@@ -6,5 +6,5 @@
   extra_fields: [
     { label: "Type", value: ->(collaborator) { collaborator.type } }
   ],
-  footer_partial: nil,
-  footer_locals: {} %>
+  footer_partial: "shared/pagination_footer",
+  footer_locals: { records: @collaborators, per_page: @pagination_per_page } %>
