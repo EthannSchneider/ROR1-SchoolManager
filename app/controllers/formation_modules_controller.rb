@@ -4,19 +4,24 @@ class FormationModulesController < ApplicationController
   before_action :require_dean!, only: %i[new create edit update destroy]
 
   def index
+    head :forbidden unless can_access_formation_plan?(@formation_plan)
   end
 
   def show
+    head :forbidden unless can_access_formation_plan?(@formation_plan)
   end
 
   def new
+    return head :forbidden unless can_access_formation_plan?(@formation_plan)
     @formation_module = FormationModule.new
   end
 
   def edit
+    head :forbidden unless can_access_formation_plan?(@formation_plan)
   end
 
   def create
+    return head :forbidden unless can_access_formation_plan?(@formation_plan)
     @formation_module = FormationModule.new(formation_module_params)
     @formation_module.formation_plans << @formation_plan if @formation_plan
 
@@ -28,6 +33,7 @@ class FormationModulesController < ApplicationController
   end
 
   def update
+    return head :forbidden unless can_access_formation_plan?(@formation_plan)
     if @formation_module.update(formation_module_params)
       redirect_to formation_plan_formation_module_url(@formation_plan, @formation_module), notice: "Module was successfully updated."
     else
@@ -36,6 +42,7 @@ class FormationModulesController < ApplicationController
   end
 
   def destroy
+    return head :forbidden unless can_access_formation_plan?(@formation_plan)
     @formation_module.destroy
     redirect_to formation_plan_url(@formation_plan), notice: "Module was successfully destroyed."
   end

@@ -39,6 +39,16 @@ Rails.application.routes.draw do
       end
     end
 
+    constraints PersonTypeConstraint.student do
+      resources :students, only: %i[show]
+      resources :school_classes, path: "classes", only: %i[show]
+      resources :formation_plans, only: %i[show] do
+        resources :formation_modules, only: %i[index show] do
+          resources :unities, only: %i[show]
+        end
+      end
+    end
+
     resources :students, only: %i[index show]
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]

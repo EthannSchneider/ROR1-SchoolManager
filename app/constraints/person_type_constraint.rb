@@ -7,6 +7,10 @@ class PersonTypeConstraint
     new("Dean")
   end
 
+  def self.student
+    new("Student")
+  end
+
   def initialize(type)
     @type = type
   end

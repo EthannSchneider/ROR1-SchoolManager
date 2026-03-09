@@ -4,7 +4,11 @@
   <% end %>
 
   <div class="mb-6">
+    <% if current_person.is_a?(Student) %>
+    <%= link_to "← Back to my class", school_class_path(current_person.school_class), class: "text-blue-600 hover:text-blue-800" %>
+    <% else %>
     <%= link_to "← Back to formation plans", formation_plans_path, class: "text-blue-600 hover:text-blue-800" %>
+    <% end %>
   </div>
 
   <div class="bg-white shadow-md rounded-lg p-6">
@@ -26,16 +30,16 @@
         <% end %>
       </div>
       <% if @formation_plan.formation_modules.any? %>
-        <ul class="space-y-2">
-          <% @formation_plan.formation_modules.each do |module_| %>
-            <li class="p-3 bg-gray-50 rounded flex justify-between items-center">
-              <%= link_to module_.name, formation_plan_formation_module_path(@formation_plan, module_), class: "text-blue-600 hover:text-blue-800" %>
-              <span class="text-sm text-gray-500"><%= module_.unities.count %> unities</span>
-            </li>
-          <% end %>
-        </ul>
+      <ul class="space-y-2">
+        <% @formation_plan.formation_modules.each do |module_| %>
+        <li class="p-3 bg-gray-50 rounded flex justify-between items-center">
+          <%= link_to module_.name, formation_plan_formation_module_path(@formation_plan, module_), class: "text-blue-600 hover:text-blue-800" %>
+          <span class="text-sm text-gray-500"><%= module_.unities.count %> unities</span>
+        </li>
+        <% end %>
+      </ul>
       <% else %>
-        <p class="text-gray-500">No modules associated with this formation plan.</p>
+      <p class="text-gray-500">No modules associated with this formation plan.</p>
       <% end %>
     </div>
   </div>
