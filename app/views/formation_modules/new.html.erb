@@ -1,0 +1,13 @@
+<div class="p-6">
+  <div class="mb-6">
+    <% if @formation_plan %>
+    <%= link_to "← Back to modules", formation_plan_formation_modules_path(@formation_plan), class: "text-blue-600 hover:text-blue-800" %>
+    <% else %>
+    <%= link_to "← Back to modules", formation_modules_path, class: "text-blue-600 hover:text-blue-800" %>
+    <% end %>
+  </div>
+
+  <h1 class="text-3xl font-bold mb-6">New Module</h1>
+
+  <%= render "form", formation_module: @formation_module %>
+</div>

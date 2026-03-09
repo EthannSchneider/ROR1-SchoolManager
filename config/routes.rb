@@ -24,6 +24,12 @@ Rails.application.routes.draw do
       resources :school_classes, path: "classes", except: %i[index show]
       resources :teachers, controller: :collaborators, except: %i[index show]
       resources :deans, controller: :collaborators, except: %i[index show]
+      resources :formation_plans, except: %i[index show] do
+        resources :formation_modules, except: %i[index show]
+      end
+      resources :formation_modules, except: %i[index show] do
+        resources :unities, except: %i[index show]
+      end
     end
 
     resources :students, only: %i[index show]
@@ -31,6 +37,12 @@ Rails.application.routes.draw do
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]
     resources :school_classes, path: "classes", only: %i[index show]
+    resources :formation_plans, only: %i[index show] do
+      resources :formation_modules, only: %i[index show]
+    end
+    resources :formation_modules, only: %i[index show] do
+      resources :unities, only: %i[index show]
+    end
   end
 
   unauthenticated do

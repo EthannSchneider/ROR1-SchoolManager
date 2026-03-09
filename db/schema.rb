@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_06_150555) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_09_103134) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -37,6 +37,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_150555) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "formation_modules", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "formation_modules_plans", id: false, force: :cascade do |t|
+    t.integer "formation_module_id", null: false
+    t.integer "formation_plan_id", null: false
+    t.index ["formation_module_id"], name: "index_formation_modules_plans_on_formation_module_id"
+    t.index ["formation_plan_id"], name: "index_formation_modules_plans_on_formation_plan_id"
+  end
+
+  create_table "formation_plans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -82,8 +101,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_150555) do
     t.index ["responsable_id"], name: "index_school_classes_on_responsable_id"
   end
 
+  create_table "unities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "formation_module_id", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["formation_module_id"], name: "index_unities_on_formation_module_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "people", "school_classes"
   add_foreign_key "school_classes", "people", column: "responsable_id"
+  add_foreign_key "unities", "formation_modules"
 end

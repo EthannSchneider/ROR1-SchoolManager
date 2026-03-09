@@ -1,0 +1,42 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Formation Plans</h1>
+    <% if current_person.is_a?(Dean) %>
+    <%= link_to "New formation plan", new_formation_plan_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+    <% end %>
+  </div>
+
+  <div class="overflow-x-auto shadow-md rounded-lg">
+    <table class="w-full border-collapse">
+      <thead class="bg-gray-100 border-b">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Modules</th>
+          <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @formation_plans.each do |formation_plan| %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm text-gray-900"><%= formation_plan.name %></td>
+          <td class="px-6 py-4 text-sm text-gray-900"><%= formation_plan.formation_modules.count %></td>
+          <td class="px-6 py-4 text-center text-sm space-x-2">
+            <%= link_to "Show", formation_plan, class: "text-blue-600 hover:text-blue-800" %>
+            <% if current_person.is_a?(Dean) %>
+            <%= link_to "Edit", edit_formation_plan_path(formation_plan), class: "text-yellow-600 hover:text-yellow-800" %>
+            <%= link_to "Destroy", formation_plan, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4">
+    <%= render "shared/pagination_footer", records: @formation_plans, per_page: @pagination_per_page %>
+  </div>
+</div>
