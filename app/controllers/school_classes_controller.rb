@@ -8,6 +8,7 @@ class SchoolClassesController < ApplicationController
   end
 
   def show
+    @ordered_students = @school_class.students.order(:lastname, :firstname)
   end
 
   def new
