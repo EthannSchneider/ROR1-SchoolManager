@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_09_103134) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_09_130415) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -94,9 +94,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_09_103134) do
 
   create_table "school_classes", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "formation_plan_id"
     t.string "name", null: false
     t.integer "responsable_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["formation_plan_id"], name: "index_school_classes_on_formation_plan_id"
     t.index ["name"], name: "index_school_classes_on_name", unique: true
     t.index ["responsable_id"], name: "index_school_classes_on_responsable_id"
   end
@@ -112,6 +114,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_09_103134) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "people", "school_classes"
+  add_foreign_key "school_classes", "formation_plans"
   add_foreign_key "school_classes", "people", column: "responsable_id"
   add_foreign_key "unities", "formation_modules"
 end
