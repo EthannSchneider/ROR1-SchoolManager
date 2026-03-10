@@ -8,6 +8,10 @@ class Person < ApplicationRecord
   validates :firstname, :lastname, :avs_number, presence: true
   validates :avs_number, uniqueness: true
 
+  def full_name
+    "#{firstname} #{lastname}"
+  end
+
   def age(on_date = Date.current)
     return nil if birthdate.blank?
 

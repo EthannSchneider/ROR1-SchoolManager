@@ -1,7 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
 one:
-  name: Test Unity
+  id: 1
+  name: Unity One
   formation_module: one
 
 two:
-  name: Another Unity
+  id: 2
+  name: Unity Two
   formation_module: two

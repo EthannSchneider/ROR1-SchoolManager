@@ -1,5 +1,7 @@
 class Student < Person
   belongs_to :school_class, optional: true
+  has_many :grades
+  has_many :unities, through: :school_class
 
   validates :admission_date, presence: true
   validates :end_date, presence: true

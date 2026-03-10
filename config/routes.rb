@@ -37,6 +37,9 @@ Rails.application.routes.draw do
           resources :unities, only: %i[index show]
         end
       end
+      resources :students, only: %i[index show] do
+        resources :grades, except: %i[index show]
+      end
     end
 
     constraints PersonTypeConstraint.student do
@@ -49,7 +52,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :students, only: %i[index show]
+    resources :students, only: %i[index show] do
+      resources :grades, only: %i[index]
+    end
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]

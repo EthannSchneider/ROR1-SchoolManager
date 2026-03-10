@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_09_130415) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_10_103704) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -56,6 +56,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_09_130415) do
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "student_id", null: false
+    t.date "test_date", null: false
+    t.integer "unity_id", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "value", precision: 2, scale: 1, null: false
+    t.index ["student_id"], name: "index_grades_on_student_id"
+    t.index ["unity_id"], name: "index_grades_on_unity_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -111,8 +122,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_09_130415) do
     t.index ["formation_module_id"], name: "index_unities_on_formation_module_id"
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "grades", "people", column: "student_id"
+  add_foreign_key "grades", "unities"
   add_foreign_key "people", "school_classes"
   add_foreign_key "school_classes", "formation_plans"
   add_foreign_key "school_classes", "people", column: "responsable_id"
