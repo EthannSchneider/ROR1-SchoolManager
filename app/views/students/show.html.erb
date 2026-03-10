@@ -10,4 +10,7 @@ else
 end ) %>
 <%= person_detail_card("Admission date", student.admission_date) %>
 <%= person_detail_card("End date", student.end_date) %>
+<% if (current_person.is_a?(Student) && current_person == @student) || current_person.is_a?(Collaborator) %>
+<%= person_detail_card("Grades", link_to("View grades", student_grades_path(student))) %>
+<% end %>
 <% end %>
