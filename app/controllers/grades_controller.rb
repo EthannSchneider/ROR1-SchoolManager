@@ -2,7 +2,7 @@ class GradesController < ApplicationController
   before_action :set_grade, only: %i[edit update destroy]
   before_action :set_student
   before_action :require_collaborator!, only: %i[edit update destroy]
-  before_action :require_collaborator!, only: %i[new create edit update destroy]
+  before_action :check_student_ownership!, only: %i[index]
 
   def index
     @grades = @student.grades
@@ -47,6 +47,12 @@ class GradesController < ApplicationController
 
   def set_student
     @student = Student.find(params[:student_id])
+  end
+
+  def check_student_ownership!
+    if current_person.is_a?(Student) && current_person != @student
+      head :forbidden
+    end
   end
 
   def new_grade_params

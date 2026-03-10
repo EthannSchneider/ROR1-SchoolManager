@@ -17,11 +17,11 @@ class GradesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "student can view another student's grade history" do
+  test "student can't view another student's grade history" do
     sign_in students(:one)
 
     get student_grades_url(@student)
-    assert_response :success
+    assert_response :forbidden
   end
 
   test "collaborator opens new grade form" do
