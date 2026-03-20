@@ -4,8 +4,12 @@ class GradesController < ApplicationController
   before_action :require_collaborator!, only: %i[edit update destroy]
   before_action :check_student_ownership!, only: %i[index]
 
+  helper_method :module_average, :grade_color_class
+
   def index
-    @grades = @student.grades
+    grades = @student.grades.includes(unity: :formation_module)
+    grouped = grades.group_by { |grade| grade.unity.formation_module }
+    @grades_by_module = grouped.sort_by { |formation_module, _| formation_module&.name.to_s }
   end
 
   def new
@@ -68,5 +72,27 @@ class GradesController < ApplicationController
       :value,
       :test_date
     )
+  end
+
+  def module_average(grades)
+    return if grades.empty?
+
+    grades.sum(&:value).to_f / grades.size
+  end
+
+  def grade_color_class(value)
+    return "text-gray-900" unless value
+
+    if value < 4
+      "text-red-600"
+    elsif value >= 4 && value <= 4.5
+      "text-yellow-500"
+    elsif value > 4.5 && value < 5.5
+      "text-green-400"
+    elsif value == 6
+      "text-green-700"
+    else
+      "text-green-500"
+    end
   end
 end
