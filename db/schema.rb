@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_10_103704) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_20_135253) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -103,6 +103,41 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_10_103704) do
     t.index ["school_class_id"], name: "index_people_on_school_class_id"
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_rooms_on_name", unique: true
+  end
+
+  create_table "schedule_collaborators", id: false, force: :cascade do |t|
+    t.integer "collaborator_id", null: false
+    t.integer "schedule_id", null: false
+    t.index ["collaborator_id", "schedule_id"], name: "index_schedule_collaborators_on_collaborator_and_schedule"
+    t.index ["schedule_id", "collaborator_id"], name: "index_schedule_collaborators_on_schedule_and_collaborator", unique: true
+  end
+
+  create_table "schedule_school_classes", id: false, force: :cascade do |t|
+    t.integer "schedule_id", null: false
+    t.integer "school_class_id", null: false
+    t.index ["schedule_id", "school_class_id"], name: "index_schedule_school_classes_on_schedule_and_school_class", unique: true
+    t.index ["school_class_id", "schedule_id"], name: "index_schedule_school_classes_on_school_class_and_schedule"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "day", null: false
+    t.time "end_time", null: false
+    t.integer "room_id", null: false
+    t.time "start_time", null: false
+    t.integer "unity_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["day", "start_time"], name: "index_schedules_on_day_start_time"
+    t.index ["room_id", "day", "start_time"], name: "index_schedules_on_room_day_start_time"
+    t.index ["room_id"], name: "index_schedules_on_room_id"
+    t.index ["unity_id"], name: "index_schedules_on_unity_id"
+  end
+
   create_table "school_classes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "formation_plan_id"
@@ -125,6 +160,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_10_103704) do
   add_foreign_key "grades", "people", column: "student_id"
   add_foreign_key "grades", "unities"
   add_foreign_key "people", "school_classes"
+  add_foreign_key "schedules", "rooms"
+  add_foreign_key "schedules", "unities"
   add_foreign_key "school_classes", "formation_plans"
   add_foreign_key "school_classes", "people", column: "responsable_id"
   add_foreign_key "unities", "formation_modules"

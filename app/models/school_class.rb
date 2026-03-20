@@ -5,5 +5,7 @@ class SchoolClass < ApplicationRecord
   has_many :unities, through: :formation_modules
   has_many :students, dependent: :nullify
 
+  has_and_belongs_to_many :schedules, join_table: :schedule_school_classes
+
   validates :name, presence: true, uniqueness: true
 end
