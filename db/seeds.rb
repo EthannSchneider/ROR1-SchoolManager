@@ -82,7 +82,7 @@ ActiveRecord::Base.transaction do
 
     plan.formation_modules = formation_modules
     plan.save!
-    [plan_name, plan]
+    [ plan_name, plan ]
   end.to_h
 
   rooms = [
