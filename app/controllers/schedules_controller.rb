@@ -115,10 +115,17 @@ class SchedulesController < ApplicationController
   end
 
   def schedules_for_person(person, week_range)
-    return Schedule.none unless person.is_a?(Collaborator)
+    scope =
+      if person.is_a?(Collaborator)
+        person.schedules
+      elsif person.is_a?(Student) && person.school_class.present?
+        person.school_class.schedules
+      else
+        Schedule.none
+      end
 
-    person.schedules
-      .includes(:room, unity: :formation_module, school_classes: :formation_plan)
+    scope
+      .includes(:room, unity: :formation_module, collaborators: [], school_classes: :formation_plan)
       .where(day: week_range)
       .order(:day, :start_time)
   end

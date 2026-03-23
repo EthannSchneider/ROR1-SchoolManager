@@ -5,6 +5,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @collaborator = people(:collaborator)
+    @student = students(:one)
     @school_class = school_classes(:one)
     @room = rooms(:one)
     @unity = unities(:one)
@@ -60,6 +61,17 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "Schedule for Alice Martin"
     assert_includes response.body, @person_schedule.unity.name
+    assert_not_includes response.body, @outside_week_schedule.day.strftime("%d.%m.%Y")
+  end
+
+  test "shows class-backed schedule for student person page" do
+    sign_in @student
+
+    get person_schedule_path(@student, week: 20, year: 2026)
+
+    assert_response :success
+    assert_includes response.body, "Schedule for John Doe"
+    assert_includes response.body, @class_schedule.unity.name
     assert_not_includes response.body, @outside_week_schedule.day.strftime("%d.%m.%Y")
   end
 
