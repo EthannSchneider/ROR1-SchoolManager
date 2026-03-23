@@ -20,6 +20,10 @@
           </div>
         </li>
         <li><%= link_to "Classes", school_classes_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <li><%= link_to "Rooms", rooms_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <% if current_person.is_a?(Dean) %>
+        <li><%= link_to "Schedules", schedules_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
+        <% end %>
         <% if current_person.is_a?(Collaborator) %>
         <li><%= link_to "Formation Plans", formation_plans_path, class: "text-gray-300 hover:text-blue-400 transition" %></li>
         <% end %>
@@ -71,6 +75,10 @@
               </div>
             </details>
             <%= link_to "Classes", school_classes_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <%= link_to "Rooms", rooms_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <% if current_person.is_a?(Dean) %>
+            <%= link_to "Schedules", schedules_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
+            <% end %>
             <% if current_person.is_a?(Collaborator) %>
             <%= link_to "Formation Plans", formation_plans_path, class: "block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition" %>
             <% end %>

@@ -47,6 +47,7 @@
         <% if current_person.is_a?(Dean) %>
         <%= link_to "Edit", edit_school_class_path(@school_class), class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700" %>
         <% end %>
+        <%= link_to "View schedule", schedule_school_class_path(@school_class), class: "rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-400" %>
         <%= link_to "Back to classes", school_classes_path, class: "rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800" %>
       </div>
 

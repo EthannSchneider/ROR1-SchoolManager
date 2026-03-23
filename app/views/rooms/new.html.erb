@@ -1,0 +1,10 @@
+<div class="mx-auto max-w-2xl p-6">
+  <div class="mb-6">
+    <%= link_to "← Back to rooms", rooms_path, class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <div class="rounded-lg bg-white p-6 shadow-md">
+    <h1 class="mb-6 text-3xl font-bold text-gray-900">New Room</h1>
+    <%= render "form", room: @room %>
+  </div>
+</div>

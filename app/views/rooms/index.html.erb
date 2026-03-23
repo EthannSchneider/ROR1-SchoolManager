@@ -1,0 +1,37 @@
+<div class="p-6">
+  <% if notice %>
+    <p class="mb-4 rounded bg-green-100 p-4 text-green-700"><%= notice %></p>
+  <% end %>
+
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Rooms</h1>
+    <% if current_person.is_a?(Dean) %>
+      <%= link_to "New room", new_room_path, class: "rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" %>
+    <% end %>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg shadow-md">
+    <table class="w-full border-collapse">
+      <thead class="border-b bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+          <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rooms.each do |room| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm text-gray-900"><%= room.name %></td>
+            <td class="px-6 py-4 text-center text-sm space-x-2">
+              <%= link_to "Show", room_path(room), class: "text-blue-600 hover:text-blue-800" %>
+              <% if current_person.is_a?(Dean) %>
+                <%= link_to "Edit", edit_room_path(room), class: "text-yellow-600 hover:text-yellow-800" %>
+                <%= link_to "Destroy", room_path(room), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
     constraints PersonTypeConstraint.dean do
       resources :students, except: %i[index show]
+      resources :rooms, except: %i[index show]
+      resources :schedules
       resources :collaborators, except: %i[index show]
       resources :school_classes, path: "classes", except: %i[index show]
       resources :teachers, controller: :collaborators, except: %i[index show]
@@ -55,10 +57,21 @@ Rails.application.routes.draw do
     resources :students, only: %i[index show] do
       resources :grades, only: %i[index]
     end
+    resources :rooms, only: %i[index show]
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]
-    resources :school_classes, path: "classes", only: %i[index show]
+    get "people/:person_id/schedule", to: "schedules#person", as: :person_schedule
+    resources :school_classes, path: "classes", only: %i[index show] do
+      member do
+        get :schedule, to: "schedules#school_class"
+      end
+    end
+    resources :rooms, only: %i[index show] do
+      member do
+        get :schedule, to: "schedules#room"
+      end
+    end
   end
 
   unauthenticated do

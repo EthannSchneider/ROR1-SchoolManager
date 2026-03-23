@@ -1,0 +1,43 @@
+<div class="p-6">
+  <% if notice %>
+    <p class="mb-4 rounded bg-green-100 p-4 text-green-700"><%= notice %></p>
+  <% end %>
+
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Schedules</h1>
+    <%= link_to "New schedule", new_schedule_path, class: "rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" %>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg shadow-md">
+    <table class="w-full border-collapse">
+      <thead class="border-b bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Day</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Time</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Course</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Room</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Classes</th>
+          <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schedules.each do |schedule| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm text-gray-900"><%= schedule.day&.strftime("%d.%m.%Y") || "No date" %></td>
+            <td class="px-6 py-4 text-sm text-gray-900">
+              <%= schedule.start_time&.strftime("%H:%M") || "--:--" %> - <%= schedule.end_time&.strftime("%H:%M") || "--:--" %>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900"><%= schedule.unity&.name || "No course" %></td>
+            <td class="px-6 py-4 text-sm text-gray-900"><%= schedule.room&.name || "No room" %></td>
+            <td class="px-6 py-4 text-sm text-gray-900"><%= schedule.school_classes.map(&:name).join(", ").presence || "N/A" %></td>
+            <td class="space-x-2 px-6 py-4 text-center text-sm">
+              <%= link_to "Show", schedule_path(schedule), class: "text-blue-600 hover:text-blue-800" %>
+              <%= link_to "Edit", edit_schedule_path(schedule), class: "text-yellow-600 hover:text-yellow-800" %>
+              <%= link_to "Destroy", schedule_path(schedule), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
