@@ -1,0 +1,46 @@
+<div class="p-6">
+  <% if notice %>
+  <p class="mb-4 p-4 bg-green-100 text-green-700 rounded"><%= notice %></p>
+  <% end %>
+
+  <div class="mb-6">
+    <% if current_person.is_a?(Student) %>
+    <%= link_to "← Back to my class", school_class_path(current_person.school_class), class: "text-blue-600 hover:text-blue-800" %>
+    <% else %>
+    <%= link_to "← Back to formation plans", formation_plans_path, class: "text-blue-600 hover:text-blue-800" %>
+    <% end %>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <div class="flex justify-between items-start mb-6">
+      <h1 class="text-3xl font-bold text-gray-900"><%= @formation_plan.name %></h1>
+      <% if current_person.is_a?(Dean) %>
+      <div class="flex gap-2">
+        <%= link_to "Edit", edit_formation_plan_path(@formation_plan), class: "px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700" %>
+        <%= link_to "Destroy", @formation_plan, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Modules</h2>
+        <% if current_person.is_a?(Dean) %>
+        <%= link_to "Add Module", new_formation_plan_formation_module_path(@formation_plan), class: "px-3 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" %>
+        <% end %>
+      </div>
+      <% if @formation_plan.formation_modules.any? %>
+      <ul class="space-y-2">
+        <% @formation_plan.formation_modules.each do |module_| %>
+        <li class="p-3 bg-gray-50 rounded flex justify-between items-center">
+          <%= link_to module_.name, formation_plan_formation_module_path(@formation_plan, module_), class: "text-blue-600 hover:text-blue-800" %>
+          <span class="text-sm text-gray-500"><%= module_.unities.count %> unities</span>
+        </li>
+        <% end %>
+      </ul>
+      <% else %>
+      <p class="text-gray-500">No modules associated with this formation plan.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

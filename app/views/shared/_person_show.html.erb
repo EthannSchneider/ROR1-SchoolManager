@@ -4,8 +4,8 @@
   <% end %>
 
   <section class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-    <div class="relative bg-gradient-to-r from-slate-100 via-blue-50 to-slate-100 px-6 pb-8 pt-10 sm:px-10">
-      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+    <div class="relative bg-linear-to-r from-slate-100 via-blue-50 to-slate-100 px-6 pb-8 pt-10 sm:px-10">
+      <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
       <div class="flex flex-col items-center gap-5 sm:flex-row sm:items-end">
         <% if current_person == person %>
         <%= form_with url: profile_picture_path, method: :patch, scope: :person, class: "shrink-0" do |form| %>
@@ -65,12 +65,15 @@
       <% end %>
 
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
-        <div class="flex flex-wrap gap-3">
-          <% if current_person.is_a?(Dean) %>
-          <%= link_to "Edit", edit_polymorphic_path(person), class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700" %>
-          <% end %>
-          <%= link_to back_label, back_path, class: "rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800" %>
-        </div>
+      <div class="flex flex-wrap gap-3">
+        <% if current_person.is_a?(Dean) %>
+        <%= link_to "Edit", edit_polymorphic_path(person), class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700" %>
+        <% end %>
+        <%= link_to person_schedule_path(person), class: "rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-200" do %>
+          View schedule
+        <% end %>
+        <%= link_to back_label, back_path, class: "rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800" %>
+      </div>
 
         <% if current_person.is_a?(Dean) %>
         <%= link_to "Destroy", person, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700" %>

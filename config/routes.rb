@@ -20,17 +20,58 @@ Rails.application.routes.draw do
 
     constraints PersonTypeConstraint.dean do
       resources :students, except: %i[index show]
+      resources :rooms, except: %i[index show]
+      resources :schedules
       resources :collaborators, except: %i[index show]
       resources :school_classes, path: "classes", except: %i[index show]
       resources :teachers, controller: :collaborators, except: %i[index show]
       resources :deans, controller: :collaborators, except: %i[index show]
+      resources :formation_plans, except: %i[index show] do
+        resources :formation_modules, only: %i[new create show edit update destroy] do
+          resources :unities, only: %i[new create show edit update destroy]
+        end
+      end
     end
 
-    resources :students, only: %i[index show]
+    constraints PersonTypeConstraint.collaborator do
+      resources :formation_plans, only: %i[index show] do
+        resources :formation_modules, only: %i[index show] do
+          resources :unities, only: %i[index show]
+        end
+      end
+      resources :students, only: %i[index show] do
+        resources :grades, except: %i[index show]
+      end
+    end
+
+    constraints PersonTypeConstraint.student do
+      resources :students, only: %i[show]
+      resources :school_classes, path: "classes", only: %i[show]
+      resources :formation_plans, only: %i[show] do
+        resources :formation_modules, only: %i[index show] do
+          resources :unities, only: %i[show]
+        end
+      end
+    end
+
+    resources :students, only: %i[index show] do
+      resources :grades, only: %i[index]
+    end
+    resources :rooms, only: %i[index show]
     resources :teachers, only: %i[index show]
     resources :deans, only: %i[index show]
     resources :collaborators, only: %i[index show]
-    resources :school_classes, path: "classes", only: %i[index show]
+    get "people/:person_id/schedule", to: "schedules#person", as: :person_schedule
+    resources :school_classes, path: "classes", only: %i[index show] do
+      member do
+        get :schedule, to: "schedules#school_class"
+      end
+    end
+    resources :rooms, only: %i[index show] do
+      member do
+        get :schedule, to: "schedules#room"
+      end
+    end
   end
 
   unauthenticated do

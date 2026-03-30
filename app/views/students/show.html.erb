@@ -3,7 +3,14 @@
   title: "Student",
   back_path: students_path,
   back_label: "Back to students" do |student| %>
-<%= person_detail_card("Class", student.school_class&.name) %>
+<%= person_detail_card("Class", if student.school_class
+  link_to(student.school_class.name, school_class_path(student.school_class))
+else
+  "No class"
+end ) %>
 <%= person_detail_card("Admission date", student.admission_date) %>
 <%= person_detail_card("End date", student.end_date) %>
+<% if (current_person.is_a?(Student) && current_person == @student) || current_person.is_a?(Collaborator) %>
+<%= person_detail_card("Grades", link_to("View grades", student_grades_path(student))) %>
+<% end %>
 <% end %>

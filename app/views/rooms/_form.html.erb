@@ -1,0 +1,25 @@
+<%= form_with(model: room) do |form| %>
+  <% if room.errors.any? %>
+    <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+      <h2 class="mb-2 text-lg font-semibold text-red-800">
+        <%= pluralize(room.errors.count, "error") %> prohibited this room from being saved:
+      </h2>
+      <ul class="list-inside list-disc space-y-1">
+        <% room.errors.full_messages.each do |message| %>
+          <li class="text-red-700"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-4">
+    <div>
+      <%= form.label :name, class: "mb-1 block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :name, class: "w-full rounded-md border border-gray-300 px-3 py-2" %>
+    </div>
+
+    <div>
+      <%= form.submit class: "w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700" %>
+    </div>
+  </div>
+<% end %>

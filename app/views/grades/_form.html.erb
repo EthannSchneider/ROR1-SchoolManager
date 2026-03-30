@@ -1,0 +1,56 @@
+<%= form_with(model: grade, url: grade.persisted? ? student_grade_path(student, grade) : student_grades_path(student), class: "space-y-6") do |form| %>
+<% if grade.errors.any? %>
+<div class="bg-red-100 border-l-4 border-red-500 p-4 mb-6">
+  <div class="flex">
+    <div class="shrink-0">
+      <span class="text-red-500">x</span>
+    </div>
+    <div class="ml-3">
+      <h3 class="text-sm font-medium text-red-700"><%= pluralize(grade.errors.count, "error") %> prohibited this grade from being saved:</h3>
+      <ul class="mt-2 text-sm text-red-600 list-disc list-inside">
+        <% grade.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+<% if show_unity %>
+<div>
+  <%= form.label :unity_id, class: "block text-sm font-medium text-gray-700 mb-2" %>
+  <%= form.select :unity_id,
+      student.unities.map { |u| [u.name, u.id] },
+      { selected: grade.unity_id },
+      { class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" }
+    %>
+</div>
+<% end %>
+
+<div>
+  <%= form.label :value, "Grade", class: "block text-sm font-medium text-gray-700 mb-2" %>
+  <%= form.number_field :value,
+      step: 0.01,
+      min: 0,
+      max: 6,
+      class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+      placeholder: "Enter grade (0-6)"
+    %>
+  <p class="mt-1 text-xs text-gray-500">Grade must be between 0 and 6</p>
+</div>
+
+<div>
+  <%# test_date will default to today if not provided, user can manually set if needed %>
+  <%= form.label :test_date, "Test Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+  <%= form.date_field :test_date,
+      value: grade.test_date || Date.today,
+      class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm",
+      required: true
+    %>
+</div>
+
+<div class="flex items-center justify-end gap-3">
+  <%= button_to "Cancel", student_grades_path(student), data: { turbo_method: :get}, class: "px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-800" %>
+  <%= form.submit "Save Grade", class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+</div>
+<% end %>

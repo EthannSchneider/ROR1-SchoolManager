@@ -23,6 +23,27 @@ class ApplicationController < ActionController::Base
     current_person.is_a?(Collaborator)
   end
 
+  def require_student!
+    return if current_person.is_a?(Student)
+    head :forbidden
+  end
+
+  def can_access_formation_plan?(formation_plan)
+    return true if current_person.is_a?(Dean)
+    return true if current_person.is_a?(Collaborator)
+    if current_person.is_a?(Student)
+      return true if current_person.formation_plan == formation_plan
+    end
+
+    false
+  end
+
+  def require_formation_plan_access!(formation_plan)
+    return true if can_access_formation_plan?(formation_plan)
+
+    head :forbidden
+  end
+
   def require_collaborator!
     return if can_view_sensitive_person_data?
 

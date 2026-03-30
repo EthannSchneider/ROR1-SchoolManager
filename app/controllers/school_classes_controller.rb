@@ -11,6 +11,7 @@ class SchoolClassesController < ApplicationController
 
   def show
     @ordered_students = @school_class.students.order(:lastname, :firstname)
+    @formation_plan = @school_class.formation_plan
   end
 
   def new
